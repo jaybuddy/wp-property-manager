@@ -113,7 +113,7 @@
 			    			<div id='floating-map-list'>
 			    				<ul>
 			    					<?php foreach($posts as $post) { ?>
-			    						<?php $json_latlng = json_encode(array("lat" => $post->meta['lat'][0], "lng" => $post->meta['lon'][0])); ?>
+			    						<?php $json_latlng = json_encode(array("id"=> $post->ID, "lat" => $post->meta['lat'][0], "lng" => $post->meta['lon'][0])); ?>
 			    						<li class='mini-tile'>
 				    						<a href='#p<?php echo $post->ID; ?>' data='<?php echo $json_latlng ?>'>
 				    							<div class='mini-image'>
@@ -141,5 +141,6 @@
 		</section>
 	</div>
 
-<script type='text/javascript' src="<?php bloginfo('url'); ?>/wp-content/plugins/wp-property-manager/assets/js/min/archive-min.js"></script>
+<!--<script type='text/javascript' src="<?php bloginfo('url'); ?>/wp-content/plugins/wp-property-manager/assets/js/min/archive-min.js"></script>-->
+<script type='text/javascript' src="<?php bloginfo('url'); ?>/wp-content/plugins/wp-property-manager/assets/js/archive.js"></script>
 <?php get_footer(); ?>

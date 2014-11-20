@@ -64,8 +64,18 @@
 			event.preventDefault();
 			$('#floating-map-list li').removeClass('selected');
 			$(this).parent('li').addClass('selected');
-
-			var data = $(this).attr('data');
+			
+			var data = JSON.parse($(this).attr('data'));
+			var i,
+			 	marker;
+			for ( marker in window.markers ) {
+				window.markers[marker].infowindow.close();
+				
+				if ( window.markers[marker].id == data.id ) {
+					window.markers[marker].infowindow.setContent(window.markers[marker].my_html);
+					window.markers[marker].infowindow.open(window.map, window.markers[marker]);
+				}
+			} 
 			alterMap(data);
 		});
 
@@ -91,6 +101,7 @@
 						marker = new google.maps.Marker({position:p});
 
 					window.markers.push(marker);
+					marker.id = window.apts[i].ID;
 					marker.my_html = h;
 					marker.setMap(map);
 						
@@ -98,7 +109,8 @@
 					google.maps.event.addListener(marker, "click", function() {
 						  infowindow.setContent(this.my_html);
 						  infowindow.open(map, this);
-					});		
+					});	
+					marker.infowindow = infowindow;
 				}
 			}
 			autoCenter(map);
@@ -125,7 +137,6 @@
 		}
 
 		function alterMap(unit) {
-			unit = JSON.parse(unit);
 			var latlng = new google.maps.LatLng(unit.lat, unit.lng);
 			
 			map.setZoom(18);
