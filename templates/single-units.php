@@ -331,15 +331,9 @@
 
                   <!-- Textarea -->
                   <div class="form-group">
-                    <label class="col-md-4 control-label" for="message">Message</label>
+                    <label class="col-md-4 control-label" for="message">Property to Share</label>
                     <div class="col-md-4">                     
-                      <textarea class="form-control" id="message" name="message">Hello {{name}}!
-                        <p>{{Your Name}} was browsing {{Website}} and found an property for rent that you might like.</p>
-
-                        <p>It is a {{2}} Bedroom, {{3}} bath {{condo}} located in {{community}}. For more information visit {{url}}</p>
-
-                        <p>Cheers!</p>
-                      </textarea>
+                      
                     </div>
                   </div>
 

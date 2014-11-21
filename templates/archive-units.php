@@ -42,9 +42,7 @@
 					    				<address>
 					    					<span><?php echo $post->meta['address'][0]; ?></span>, <?php echo $post->meta['city'][0]; ?> <?php echo $post->meta['state'][0]; ?>, <?php echo $post->meta['zip'][0]; ?>
 					    				</address>
-					    				<div class='pull-right freshness <?php echo $listingAge["class"]; ?>'>
-					    					<div class="listingAge" data-toggle="tooltip" data-placement="top" title="<?php echo $listingAge['text']; ?>"><i class="fa fa-clock-o"></i></div>
-					    				</div>
+					    				
 					    				<div class='clear'></div>
 					    			</header>
 					    			<div class='feat-image'>
@@ -66,6 +64,9 @@
 					    				<a class='more-details-button' href='<?php echo $post->meta['permalink']; ?>'>More Details <i class='fa fa-arrow-right'></i></a>
 					    			</div>
 					    			<div class='clear'></div>
+					    			<footer>
+					    				<div class='freshness <?php echo $listingAge["class"]; ?>'><i class="fa fa-clock-o"></i> Posted <?php echo $listingAge['text']; ?></div>
+					    			</footer>
 					    		</article>
 				    		<?php } ?>
 				    	</div>
