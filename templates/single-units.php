@@ -2,8 +2,10 @@
 
 <?php
   /* Prep the Unit Data */
-  include(ABSPATH.'/wp-content/plugins/wp-property-manager/assets/includes/helpers.php');
+  include(ABSPATH.'/wp-content/plugins/wp-property-manager/includes/helpers.php');
   $rental = setupSingleUnitData( get_the_ID() );
+
+  include(ABSPATH.'/wp-content/plugins/wp-property-manager/includes/email-to-friend.php');
 ?>
 <script type='text/javascript'>
   /* Echo out some PHP that we will need for the JS variables. */
@@ -283,70 +285,7 @@
      
 </div>
 
-<div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content" style="overflow:hidden">
-            <div class="modal-header" style="overflow:hidden">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Send to a Friend!</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal">
-                  
-                  <!-- Text input-->
-                  <div class="form-group">
-                    <label class="col-md-4 control-label" for="your_name">Your Name</label>  
-                    <div class="col-md-5">
-                    <input id="your_name" name="your_name" type="text" placeholder="" class="form-control input-md" required="">
-                      
-                    </div>
-                  </div>
 
-                  <!-- Text input-->
-                  <div class="form-group">
-                    <label class="col-md-4 control-label" for="your_email">Your Email</label>  
-                    <div class="col-md-5">
-                    <input id="your_email" name="your_email" type="text" placeholder="" class="form-control input-md" required="">
-                      
-                    </div>
-                  </div>
-
-                  <!-- Text input-->
-                  <div class="form-group">
-                    <label class="col-md-4 control-label" for="friends_name">Your Friend</label>  
-                    <div class="col-md-5">
-                    <input id="friends_name" name="friends_name" type="text" placeholder="" class="form-control input-md" required="">
-                      
-                    </div>
-                  </div>
-
-                  <!-- Text input-->
-                  <div class="form-group">
-                    <label class="col-md-4 control-label" for="friends_email">Your Friend</label>  
-                    <div class="col-md-5">
-                    <input id="friends_email" name="friends_email" type="text" placeholder="" class="form-control input-md" required="">
-                      
-                    </div>
-                  </div>
-
-                  <!-- Textarea -->
-                  <div class="form-group">
-                    <label class="col-md-4 control-label" for="message">Property to Share</label>
-                    <div class="col-md-4">                     
-                      
-                    </div>
-                  </div>
-
-                  
-                </form>
-
-            </div>
-            <div class="modal-footer" style="margin-top:0px">
-                
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 <div class="modal" id="slideshowModal" tabindex="-1" role="dialog" aria-labelledby="slideshowModal" aria-hidden="true">
     <div class="modal-dialog">
@@ -375,5 +314,6 @@
 <?php } ?>
     
 
-  <script type='text/javascript' src="<?php bloginfo('url'); ?>/wp-content/plugins/wp-property-manager/assets/js/min/single-min.js"></script>
+<script type='text/javascript' src="<?php bloginfo('url'); ?>/wp-content/plugins/wp-property-manager/assets/js/min/single-min.js"></script>
+
 <?php get_footer(); ?>

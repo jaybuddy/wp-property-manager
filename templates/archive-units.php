@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 
 <?php 
-	include(ABSPATH.'wp-content/plugins/wp-property-manager/assets/includes/helpers.php'); 
+	include(ABSPATH.'wp-content/plugins/wp-property-manager/includes/helpers.php'); 
 	$posts = setupArchiveUnitsData();
 ?>
 

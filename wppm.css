@@ -682,6 +682,22 @@
 #shareModal .modal-footer {
   height: 50px;
 }
+#shareModal .share-property-modal {
+  margin-top: 40px;
+}
+#shareModal .share-property-modal img {
+  width: 100%;
+  height: auto;
+}
+#shareModal .share-property-modal address {
+  font-size: 18px;
+  font-weight: bold;
+}
+#shareModal .send-btn {
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+}
 /* Options Page */
 /* Bootstrap Overrides */
 .panel-default > .panel-heading {

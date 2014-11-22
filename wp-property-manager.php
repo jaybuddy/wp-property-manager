@@ -85,15 +85,17 @@ class wpPropertyManager {
 
 		add_filter( 'template_include', array( $this, 'load_templates' ) );
 	}
-	
+
 	function load_wppm_scripts() {
 		wp_enqueue_script("jquery");
 		wp_enqueue_script( 'google-maps-api', 'http://maps.google.com/maps/api/js?sensor=false', array(), '3', false );
+		wp_enqueue_script( 'bs-validate-js', plugin_dir_url( __FILE__ ).'assets/js/min/bootstrapValidator.min.js', array(), '3', false );
 	}
 
 	function load_wppm_stylesheet() {
 		wp_enqueue_style( 'wppm-styes', plugin_dir_url( __FILE__ ).'wppm.css', array(), '1');
 		wp_enqueue_style( 'fa-styes', plugin_dir_url( __FILE__ ).'assets/font-awesome/css/font-awesome.min.css', array(), '1');
+		wp_enqueue_style( 'bs-validate-css', plugin_dir_url( __FILE__ ).'assets/css/min/bootstrapValidator.min.css', array(), '.52');
 	}
 	
 	function add_image_sizes() {
