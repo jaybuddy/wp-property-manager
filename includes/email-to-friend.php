@@ -1,9 +1,3 @@
-<?php
-	if (isset( $_POST['sent'] ) && wp_verify_nonce($_POST['sent'], 'send_to_friend') ) {
-          echo 'form submitted with nonce correctly';
-     }
-?>
-
 <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -12,7 +6,7 @@
                 <h4 class="modal-title">Send to a Friend!</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="" method="post" id="shareForm">
+                <form class="form-horizontal" action="#" method="post" id="shareForm">
                   <?php wp_nonce_field( 'send_to_friend', 'sent' ); ?>
                   <input type='hidden' name='property_id' value='<?php echo get_the_id(); ?>' />
                   
@@ -133,6 +127,24 @@ $(document).ready(function() {
                 }
             }
         }
-    });
+    }).on('success.form.bv', function(e) {
+            // Prevent form submission
+            e.preventDefault();
+            var $form = $(e.target);
+            var bv = $form.data('bootstrapValidator');
+
+            $.ajax({
+              type: "post",
+              dataType: "json",
+              url: the_ajax_script.ajaxurl,
+              data: {action: 'share_property', data: $form.serialize()},
+              success: function(response){
+                console.log(response);
+              }
+            });
+            
+            
+        });
+
 });
 </script>
