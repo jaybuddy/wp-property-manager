@@ -186,10 +186,11 @@ class wpPropertyManager {
 	* 
 	* @since 0.8
 	* @access public
+	* @param string $template 	Name of template.
 	* @return string $template	The name of the template file we are loading
 	* 
 	*/
-	function load_templates() {
+	function load_templates( $template ) {
 
         if ( is_singular( 'units' ) ) {
         	if ( $overridden_template = locate_template( 'single-units.php' ) ) {
