@@ -12,7 +12,18 @@
 
 class wpPropertyManager {
 
+	/**
+	* Declare the Options page globally.
+	*
+	* @var string
+	*/
 	var $optionsPage = 'wppm-options';
+	
+	/**
+	* List of extra fields we are saving as post meta in the DB
+	*
+	* @var array
+	*/
 	var $extra_fields = array(
 		'address'   		=> '',
 		'city'				=> '',
@@ -68,73 +79,65 @@ class wpPropertyManager {
 	);
 
 	function __construct() {
-		add_action( 'admin_menu', array( $this, 'adminPage' ) );
-		add_action( 'init', array( $this, 'initPostType' ) );
-		add_action( 'init', array( $this, 'add_image_sizes' ) );
+		add_action( 'init', array( $this, 'load_scripts') );
+		add_action( 'init', array( $this, 'load_styles' ) );
+		add_action( 'init', array( $this, 'init_post_type' ) );
+		add_action( 'admin_menu', array( $this, 'wppm_admin' ) );
+		add_filter( 'manage_edit-units_columns', array( $this, 'edit_units_columns' ) );
+		add_action( 'manage_units_posts_custom_column', array( $this, 'manage_units_columns' ) );
+		add_filter( 'manage_edit-units_sortable_columns', array( $this, 'units_sortable_columns' ) );
+		add_filter( 'request', array( $this, 'sort_units' ) );
+		//add_action( 'wp_ajax_share_property', array( $this, 'share_property' ) );
+		//add_action( 'wp_ajax_nopriv_share_property', array( $this, 'share_property' ) );
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		add_action( 'save_post', array( $this, 'save_unit_meta_boxes' ) );
-		add_action( 'init', array( $this, 'load_wppm_scripts') );
-		add_action( 'init', array( $this, 'load_wppm_stylesheet' ) );
 		add_filter( 'post_updated_messages', array( $this, 'updated_messages' ) );
-
-		add_filter( 'manage_edit-units_columns', array( $this, 'edit_units_columns' ) );
-		add_filter( 'manage_edit-units_sortable_columns', array( $this, 'units_sortable_columns' ) );
-
-		add_action( 'manage_units_posts_custom_column', array( $this, 'manage_units_columns' ) );
-		add_action( 'load-edit.php', array( $this, 'edit_units_load' ) );	
-
-		add_action( 'wp_ajax_share_property', array( $this, 'share_property' ) );
-		add_action( 'wp_ajax_nopriv_share_property', array( $this, 'share_property' ) );
-
 		add_filter( 'template_include', array( $this, 'load_templates' ) );
 	}
 
-	function load_wppm_scripts() {
+	/**
+	* Properly enqueues Javascript files into WP.
+	*	1) jquery
+	*	2) Google Maps API
+	*	3) Bootstrap Validator
+	* 
+	* @since 0.8
+	* @access public
+	* 
+	*/
+	function load_scripts() {
+		
 		wp_enqueue_script("jquery");
 		wp_enqueue_script( 'google-maps-api', 'http://maps.google.com/maps/api/js?sensor=false', array(), '3', false );
 		wp_enqueue_script( 'bs-validate-js', plugin_dir_url( __FILE__ ).'assets/js/min/bootstrapValidator.min.js', array(), '3', false );
-		wp_localize_script( 'share_property', 'the_ajax_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+		
+		//wp_localize_script( 'share_property', 'the_ajax_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 	}
 
-	function load_wppm_stylesheet() {
+	/**
+	* Properly enqueues stylesheets files into WP.
+	*	1) WP Property Manger Styles
+	*	2) Font Awesome
+	*	3) Bootstrap Validator
+	* 
+	* @since 0.8
+	* @access public
+	* 
+	*/
+	function load_styles() {
 		wp_enqueue_style( 'wppm-styes', plugin_dir_url( __FILE__ ).'wppm.css', array(), '1');
 		wp_enqueue_style( 'fa-styes', plugin_dir_url( __FILE__ ).'assets/font-awesome/css/font-awesome.min.css', array(), '1');
 		wp_enqueue_style( 'bs-validate-css', plugin_dir_url( __FILE__ ).'assets/css/min/bootstrapValidator.min.css', array(), '.52');
 	}
 	
-	function add_image_sizes() {
-		add_image_size( 'tiles-featured', 225, 225, true );
-		add_image_size( 'mini-tiles', 80, 55, true );
-	}
-
-	function load_templates( $template ){
-
-        if ( is_singular( 'units' ) ) {
-        	if ( $overridden_template = locate_template( 'single-units.php' ) ) {
-			   $template = $overridden_template;
-			 } else {
-			   $template = plugin_dir_path(__file__) . 'templates/single-units.php';
-			 }
-			 
-        } elseif ( is_archive( 'units' ) ) {
-        	if ( $overridden_template = locate_template( 'archive-units.php' ) ) {
-			   $template = $overridden_template;
-			 } else {
-			   $template = plugin_dir_path(__file__) . 'templates/archive-units.php';
-			 }
-        }
-        load_template( $template );
-	}
-
-	function adminPage() {
-		add_options_page( 'WP Property Manager', 'Property Manager', 'manage_options', 'wppm-options', array( $this, 'loadOptionsPage' ) );
-	}
-
-	function loadOptionsPage() {
-		require_once ('wppm-options.php');
-	}
-
-	function initPostType() {
+	/**
+	* Initializes the "Units" custom post type in WP. We also add the two additional image sizes for our templates.
+	* 
+	* @since 0.8
+	* @access public
+	* 
+	*/
+	function init_post_type() {
 
 		$labels = array(
 			'name'                => _x( 'Unit', 'Post Type General Name', 'wppm' ),
@@ -172,8 +175,69 @@ class wpPropertyManager {
 		);
 		register_post_type( 'units', $args );
 		flush_rewrite_rules();
+		
+		add_image_size( 'tiles-featured', 225, 225, true );
+		add_image_size( 'mini-tiles', 80, 55, true );
 	}
 	
+	/**
+	* Check if the user has overwritten the default templates and loads them is they have. If not, we default to the
+	* templates included in the plugin.
+	* 
+	* @since 0.8
+	* @access public
+	* @return string $template	The name of the template file we are loading
+	* 
+	*/
+	function load_templates() {
+
+        if ( is_singular( 'units' ) ) {
+        	if ( $overridden_template = locate_template( 'single-units.php' ) ) {
+			   $template = $overridden_template;
+			 } else {
+			   $template = plugin_dir_path(__file__) . 'templates/single-units.php';
+			 }
+			 
+        } elseif ( is_archive( 'units' ) ) {
+        	if ( $overridden_template = locate_template( 'archive-units.php' ) ) {
+			   $template = $overridden_template;
+			 } else {
+			   $template = plugin_dir_path(__file__) . 'templates/archive-units.php';
+			 }
+        }
+        load_template( $template );
+	}
+
+	/**
+	* Register the admin options page for the plugin
+	* 
+	* @since 0.8
+	* @access public
+	* 
+	*/
+	function wppm_admin() {
+		add_options_page( 'WP Property Manager', 'Property Manager', 'manage_options', 'wppm-options', array( $this, '_wppm_options' ) );
+	}
+	
+	/**
+	* Including the actual options page to be displayed in the admin.
+	* 
+	* @since 0.8
+	* @access private
+	* 
+	*/
+	function _wppm_options() {
+		require_once ('wppm-options.php');
+	}
+
+	/**
+	* Changes the columns to be displayed for the Units post type. 
+	* 
+	* @since 0.8
+	* @access public
+	* @param array $column 	The column name
+	* 
+	*/
 	function edit_units_columns( $columns ) {
 
 		$columns = array(
@@ -186,8 +250,17 @@ class wpPropertyManager {
 
 		return $columns;
 	}
-
+	
+	/**
+	* Takes the passed column name and grabs the column value for each unit.
+	* 
+	* @since 0.8
+	* @access public
+	* @param string $column 	The column name
+	* 
+	*/
 	function manage_units_columns( $column ) {
+	
 		global $post;
 
 		switch( $column ) {
@@ -200,8 +273,6 @@ class wpPropertyManager {
 				} else {
 					printf( '<i class="fa fa-exclamation-circle"></i>' );
 				}
-				
-
 				break;
 
 			case 'status' :
@@ -215,7 +286,16 @@ class wpPropertyManager {
 				break;
 		}
 	}
-
+	
+	/**
+	* Set which columns are sortable
+	* 
+	* @since 0.8
+	* @access public
+	* @param array $column 	Array of column names
+	* @return array $columns 	Array of column names that are sortable
+	* 
+	*/
 	function units_sortable_columns( $columns ) {
 
 		$columns['status'] = 'status';
@@ -223,10 +303,15 @@ class wpPropertyManager {
 		return $columns;
 	}
 
-	function edit_units_load() {
-		add_filter( 'request', array( $this, 'sort_units' ) );
-	}
-
+	/**
+	* Set which columns are sortable
+	* 
+	* @since 0.8
+	* @access public
+	* @param array $vars 	Array of column names
+	* @return array $vars 	Array of column names that are sortable
+	* 
+	*/
 	function sort_units( $vars ) {
 
 		if ( isset( $vars['post_type'] ) && 'units' == $vars['post_type'] ) {
@@ -246,32 +331,86 @@ class wpPropertyManager {
 		return $vars;
 	}
 
+	/**
+	* Add meta boxes for the add/edit unit form. 
+	* 
+	* @since 0.8
+	* @access public
+	* 
+	*/
 	function add_meta_boxes() {
 		if( function_exists( 'add_meta_box' ) ) {
-			add_meta_box( 'unit-info', __('Unit Information'), array( $this, 'display_unitinfo_meta'), 'units', 'normal', 'high');
-			add_meta_box( 'maps', __('Maps'), array( $this, 'display_maps_meta'), 'units', 'normal', 'high');
-			add_meta_box( 'gallery', __('Gallery'), array( $this, 'display_gallery_meta'), 'units', 'normal', 'low');
-			add_meta_box( 'unit-status', __('Availability'), array( $this, 'display_status_meta'), 'units', 'side', 'high');
+			add_meta_box( 'unit-info', __('Unit Information'), array( $this, '_display_unitinfo_meta'), 'units', 'normal', 'high');
+			add_meta_box( 'maps', __('Maps'), array( $this, '_display_maps_meta'), 'units', 'normal', 'high');
+			add_meta_box( 'gallery', __('Gallery'), array( $this, '_display_gallery_meta'), 'units', 'normal', 'low');
+			add_meta_box( 'unit-status', __('Availability'), array( $this, '_display_status_meta'), 'units', 'side', 'high');
 		}
 	}
 	
-	function display_unitinfo_meta( $post ) {
+	/**
+	* Includes the unit info metabox code. 
+	* 
+	* @since 0.8
+	* @access private
+	* @param array $post 	Post data for the form inputs
+	* 
+	*/
+	function _display_unitinfo_meta( $post ) {
 		include('metaboxes/unit-info.php');
 	}
 
-	function display_maps_meta( $post ) {
+	/**
+	* Includes the unit maps metabox code. 
+	* 
+	* @since 0.8
+	* @access private
+	* @param array $post 	Post data for the form inputs
+	* 
+	*/
+	function _display_maps_meta( $post ) {
 		include('metaboxes/maps.php');
 	}
 
-	function display_gallery_meta( $post ) {
+	/**
+	* Includes the unit gallery metabox code. 
+	* 
+	* @since 0.8
+	* @access private
+	* @param array $post 	Post data for the form inputs
+	* 
+	*/
+	function _display_gallery_meta( $post ) {
 		include('metaboxes/gallery.php');
 	}
 
-	function display_status_meta( $post ) {
+	/**
+	* Includes the unit status metabox code. 
+	* 
+	* @since 0.8
+	* @access private
+	* @param array $post 	Post data for the form inputs
+	* 
+	*/
+	function _display_status_meta( $post ) {
 		include('metaboxes/unit-status.php');
 	}
 
+	/**
+	* Handles saving data from unit metaboxes.
+	* 
+	* @since 0.8
+	* @access public
+	* @param int $post_id 	ID of the post that the post meta belongs to.
+	* 
+	*/
 	function save_unit_meta_boxes( $post_id ) {
+		/*
+		* If we arent doing an autosave we merge all the extra fields with their corresponding post data.
+		* Next we check to make sure we are saving a unit vs a post or page so we dont make the geocoding 
+		* request when we dont need to. Once we geocode the address, we save the long/lat in the DB. Next we 
+		* check to see if we are chaging the property from rented to available and if so, we set that date time
+		* so we can calculate the listing age later on.
+		*/
 		
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
 		
@@ -286,7 +425,7 @@ class wpPropertyManager {
 			
 			$address = $post_data['address']." ".$post_data['city'].", ".$post_data['state']." ".$post_data['zip'];
 
-			$geoCode = $this->geoCode( $address, $post_data );
+			$geoCode = $this->_geo_code( $address, $post_data );
 
 			update_post_meta( $post_id, 'lat', $geoCode['lat']);
 			update_post_meta( $post_id, 'lon', $geoCode['lon']);
@@ -305,7 +444,18 @@ class wpPropertyManager {
 		}
 	}
 
-	function geoCode( $address, $post_data ) {
+	/**
+	* Handles the geocoding of the address when the property is saved. However, prior to doing so, 
+	* it checks to see if the address has changed. If it hasnt changed, there is no need to re-geocode. 
+	* 
+	* @since 0.8
+	* @access private
+	* @param string $address 	Current address prior to saving.
+	* @param array $post_data 	Array of post data from the form.
+	* @return array 	the lng and lat coordinates for the address. 
+	*
+	*/
+	function _geo_code( $address, $post_data ) {
 
 		if ( !is_null($address) ) {
 
@@ -327,6 +477,15 @@ class wpPropertyManager {
 		}
 	}
 
+	/** 
+	* Sets the update messages for the units custom post type.
+	* 
+	* @since 0.8
+	* @access public
+	* @param array $messages 	Array of messages.
+	* @return array $messages	The updated messages.
+	*
+	*/
 	function updated_messages( $messages ) {
 		global $post_ID, $post;
 		
@@ -346,8 +505,7 @@ class wpPropertyManager {
 		
 		return $messages;
 	}
-
-
+	
 	function share_property() {
 		die('I am here000');
 	}
