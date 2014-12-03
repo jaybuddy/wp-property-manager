@@ -1,14 +1,19 @@
 <?php
-
-/*
- Plugin Name: WP Property Manager
- Plugin URI: http://www.jaybuddy.com/
- Description: WP Property Manager is a plugin that adds functionality for Property Management websites.
- Version: 0.8
- Author: Jay Pedersen
- Author URI: http://www.jaybuddy.com/
+/**
+ * Plugin Name: WP Property Manager
+ * Plugin URI: http://www.wp-property-manager.com
+ * Description: WP Property Manager is a plugin that adds functionality for Property Management websites.
+ * Version: 0.8
+ * Author: Jay Pedersen
+ * Author URI: http://jaybuddy.me
+ * Requires at least: 3.8
+ * Tested up to: 4.0
+ *
+ * Text Domain: wppm
+ *
+ * @package WP Property Manager
+ * @author Jay Pedersen
  */
-
 
 class wpPropertyManager {
 
@@ -87,8 +92,8 @@ class wpPropertyManager {
 		add_action( 'manage_units_posts_custom_column', array( $this, 'manage_units_columns' ) );
 		add_filter( 'manage_edit-units_sortable_columns', array( $this, 'units_sortable_columns' ) );
 		add_filter( 'request', array( $this, 'sort_units' ) );
-		//add_action( 'wp_ajax_share_property', array( $this, 'share_property' ) );
-		//add_action( 'wp_ajax_nopriv_share_property', array( $this, 'share_property' ) );
+		add_action( 'wp_ajax_share_property', array( $this, 'share_property' ) );
+		add_action( 'wp_ajax_nopriv_share_property', array( $this, 'share_property' ) );
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		add_action( 'save_post', array( $this, 'save_unit_meta_boxes' ) );
 		add_filter( 'post_updated_messages', array( $this, 'updated_messages' ) );
@@ -109,9 +114,10 @@ class wpPropertyManager {
 		
 		wp_enqueue_script("jquery");
 		wp_enqueue_script( 'google-maps-api', 'http://maps.google.com/maps/api/js?sensor=false', array(), '3', false );
+		wp_enqueue_script( 'email', plugin_dir_url( __FILE__ ).'assets/js/min/email-to-friend-min.js', array(), '0.8', false );
 		wp_enqueue_script( 'bs-validate-js', plugin_dir_url( __FILE__ ).'assets/js/min/bootstrapValidator.min.js', array(), '3', false );
 		
-		//wp_localize_script( 'share_property', 'the_ajax_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+		wp_localize_script( 'email', 'share_property', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 	}
 
 	/**
@@ -508,7 +514,37 @@ class wpPropertyManager {
 	}
 	
 	function share_property() {
-		die('I am here000');
+
+		$data = $_POST['data'];
+
+		if (isset( $data['sent'] ) && wp_verify_nonce( $data['sent'], 'send_to_friend' ) ) {
+          	if ( !empty( $data['friends_email'] ) && !empty( $data['friends_name'] )&& !empty( $data['your_name'] ) && !empty( $data['your_email'] ) && !empty( $data['property_id'] ) ) {
+          		$to = $data['friends_email'];
+          		$subject = 'Property for rent';
+          		$message = 'Hello '. $data['friends_name'] . ','."\r\n\r\n";
+          		$message .= 'I found a property for rent that you may be interested in seeing.'."\r\n";
+          		$message .= 'To view the unit, http://www.shoremanagement.com/units/view/' . $data['property_id'] . ' click here.'."\r\n\r\n";
+          		$message .= $data['your_name'];
+
+          		$headers = 'From: ' . $data['your_name'] . '<' . $data['your_email'] . '>'."\r\n";
+          		$headers .= 'Reply-To: ' . $data['your_email'] . "\r\n";
+
+          		mail($to, $subject, $message, $headers);
+
+          		$response = array(
+          			'success' => true,
+          			'message' => 'An email has been sent to '.$data['friends_name']
+          		);
+          		echo json_encode( $response );
+          	} else {
+          		$response = array(
+          			'success' => false,
+          			'message' => 'Not all form fields were completed, please try again.'
+          		);
+          		echo json_encode( $response );
+          	}
+          	die();
+     	}
 	}
 	
 

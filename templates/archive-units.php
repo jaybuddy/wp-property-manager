@@ -1,4 +1,15 @@
-<?php get_header(); ?>
+<?php 
+/**
+ * The Template for displaying unit archives, including the main units page which is a post type archive.
+ *
+ * Override this template by copying it to yourtheme/wppm/archive-units.php
+ *
+ * @author 		Jay Pedersen
+ * @package 	WP Property Manager/Templates
+ * @version     0.8
+ */
+
+get_header(); ?>
 
 <?php 
 	include(ABSPATH.'wp-content/plugins/wp-property-manager/includes/helpers.php'); 
