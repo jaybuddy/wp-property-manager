@@ -84,6 +84,8 @@ class wpPropertyManager {
 	);
 
 	function __construct() {
+		add_action('admin_print_scripts', array( $this, 'load_admin_scripts' ) );
+		add_action('admin_print_styles', array( $this, 'load_admin_styles' ) );
 		add_action( 'init', array( $this, 'load_scripts') );
 		add_action( 'init', array( $this, 'load_styles' ) );
 		add_action( 'init', array( $this, 'init_post_type' ) );
@@ -98,6 +100,16 @@ class wpPropertyManager {
 		add_action( 'save_post', array( $this, 'save_unit_meta_boxes' ) );
 		add_filter( 'post_updated_messages', array( $this, 'updated_messages' ) );
 		add_filter( 'template_include', array( $this, 'load_templates' ) );
+	}
+
+	function load_admin_scripts() {
+		wp_enqueue_script('media-upload');
+		wp_enqueue_script('thickbox');
+		wp_enqueue_script('jquery');
+	}
+
+	function load_admin_styles() {
+		wp_enqueue_style('thickbox');
 	}
 
 	/**
