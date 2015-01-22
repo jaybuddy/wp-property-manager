@@ -35,7 +35,7 @@
 		</form>
 	</div>
 </div>
-<div></div>
+
 <script language="JavaScript">
 jQuery(document).ready(function() {
 jQuery('.upload_button').click(function() {
