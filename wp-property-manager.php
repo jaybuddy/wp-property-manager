@@ -14,6 +14,7 @@
  * @package WP Property Manager
  * @author Jay Pedersen
  */
+include( dirname( __FILE__ ).'/admin/admin-init.php' );
 
 class wpPropertyManager {
 
