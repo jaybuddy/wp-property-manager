@@ -2,9 +2,9 @@
 
 <?php
   /* Prep the Unit Data */
+  
   include(ABSPATH.'/wp-content/plugins/wp-property-manager/includes/helpers.php');
   $rental = setupSingleUnitData( get_the_ID() );
-
   include(ABSPATH.'/wp-content/plugins/wp-property-manager/includes/email-to-friend.php');
 ?>
 <script type='text/javascript'>
@@ -52,12 +52,14 @@
                               <h1><?php echo $rental['address'][0]; ?>, <?php echo $rental['city'][0]; ?> <?php echo $rental['state'][0]; ?>, <?php echo $rental['zip'][0]; ?></h1>
                          </div>
                          <div class='pull-right unit-options'>
-                         <button type="button" class="btn btn-wppm" data-toggle="modal" data-target="#shareModal"><i class='fa fa-share'></i><span class='hidden-xs'> Share</span></button>
-                         <button type="button" class="btn btn-wppm apply-now"><i class='fa fa-pencil'></i><span class='hidden-xs'> Apply Now!</span></button>
+                              
+                              <?php echo the_email_a_friend(); ?>
+                              <?php echo the_application( $rental ); ?>
+
+                         </div>
                     </div>
                </div>
           </div>
-     </div>
         
      <div class='single-content-section row'>
           <div class='container'>
@@ -284,8 +286,6 @@
      </div>
      
 </div>
-
-
 
 <div class="modal" id="slideshowModal" tabindex="-1" role="dialog" aria-labelledby="slideshowModal" aria-hidden="true">
     <div class="modal-dialog">

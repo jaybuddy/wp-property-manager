@@ -8,7 +8,7 @@
             <div class="modal-body">
                 <form class="form-horizontal" action="#" method="post" id="shareForm">
                   <?php wp_nonce_field( 'send_to_friend', 'sent' ); ?>
-                  <input type='hidden' name='property_id' value='<?php echo get_the_id(); ?>' />
+                  <input type='hidden' name='permalink' value='<?php echo get_the_permalink( get_the_ID() ); ?>' />
                   
                   <div class="form-group">
                     <label class="col-md-4 control-label" for="your_name">Your Name</label>  
@@ -27,7 +27,7 @@
                   </div>
 
                   <div class="form-group">
-                    <label class="col-md-4 control-label" for="friends_name">Your Friend</label>  
+                    <label class="col-md-4 control-label" for="friends_name">Your Friend's Name</label>  
                     <div class="col-md-8">
                          <input id="friends_name" name="friends_name" type="text" placeholder="" class="form-control input-md" required="">
                       
@@ -35,7 +35,7 @@
                   </div>
 
                   <div class="form-group">
-                    <label class="col-md-4 control-label" for="friends_email">Your Friend</label>  
+                    <label class="col-md-4 control-label" for="friends_email">Your Friend's Email</label>  
                     <div class="col-md-8">
                          <input id="friends_email" name="friends_email" type="text" placeholder="" class="form-control input-md" required="">
                       

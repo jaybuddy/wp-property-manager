@@ -17,13 +17,6 @@
 include( dirname( __FILE__ ).'/admin/admin-init.php' );
 
 class wpPropertyManager {
-
-	/**
-	* Declare the Options page globally.
-	*
-	* @var string
-	*/
-	var $optionsPage = 'wppm-options';
 	
 	/**
 	* List of extra fields we are saving as post meta in the DB
@@ -81,7 +74,8 @@ class wpPropertyManager {
 		'ui_show_gsv'		=> '',
 		'photo-gal'			=> '',
 		'status'			=> '',
-		'last_avail_date'	=> ''
+		'last_avail_date'	=> '',
+		'application'		=> '',
 	);
 
 	function __construct() {
@@ -90,7 +84,6 @@ class wpPropertyManager {
 		add_action( 'init', array( $this, 'load_scripts') );
 		add_action( 'init', array( $this, 'load_styles' ) );
 		add_action( 'init', array( $this, 'init_post_type' ) );
-		add_action( 'admin_menu', array( $this, 'wppm_admin' ) );
 		add_filter( 'manage_edit-units_columns', array( $this, 'edit_units_columns' ) );
 		add_action( 'manage_units_posts_custom_column', array( $this, 'manage_units_columns' ) );
 		add_filter( 'manage_edit-units_sortable_columns', array( $this, 'units_sortable_columns' ) );
@@ -116,34 +109,68 @@ class wpPropertyManager {
 	/**
 	* Properly enqueues Javascript files into WP.
 	*	1) jquery
-	*	2) Google Maps API
-	*	3) Bootstrap Validator
+	*	2) Bootstrap
+	*	3) Google Maps API
+	*	4) Bootstrap Validator
 	* 
 	* @since 0.8
 	* @access public
 	* 
 	*/
 	function load_scripts() {
-		
+		global $redux_options;
 		wp_enqueue_script("jquery");
+
+		$bs = $redux_options['opt-bootstrap'];
+
+		if ( $bs == 1 ) {
+			//Load from CDN//
+			wp_enqueue_script( 'bootstrap-script', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js', array( 'jquery' ), '3.3.2', true );
+		} elseif ( $bs == 2 ) {
+			//Load from plugin//
+			wp_enqueue_script( 'bootstrap-script', dirname( __FILE__ ).'/assets/bootstrap/js/bootstrap.min.js', array( 'jquery' ), '3.3.2', true );
+		} elseif ( $bs == 3 ) {
+			//load from nowhere... They have it loaded elsewhere... lets check to be sure though
+		} else {
+			//load from plugin. (fallback)//
+			wp_enqueue_script( 'bootstrap-script', dirname( __FILE__ ).'/assets/bootstrap/js/bootstrap.min.js', array( 'jquery' ), '3.3.2', true );
+		}
+		
 		wp_enqueue_script( 'google-maps-api', 'http://maps.google.com/maps/api/js?sensor=false', array(), '3', false );
 		wp_enqueue_script( 'email', plugin_dir_url( __FILE__ ).'assets/js/min/email-to-friend-min.js', array(), '0.8', false );
 		wp_enqueue_script( 'bs-validate-js', plugin_dir_url( __FILE__ ).'assets/js/min/bootstrapValidator.min.js', array(), '3', false );
-		
 		wp_localize_script( 'email', 'share_property', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 	}
 
 	/**
 	* Properly enqueues stylesheets files into WP.
-	*	1) WP Property Manger Styles
-	*	2) Font Awesome
-	*	3) Bootstrap Validator
+	*	1) Bootsctap	
+	*	2) WP Property Manger Styles
+	*	3) Font Awesome
+	*	4) Bootstrap Validator
 	* 
 	* @since 0.8
 	* @access public
 	* 
 	*/
 	function load_styles() {
+		global $redux_options;
+
+		$bs = $redux_options['opt-bootstrap'];
+
+		if ( $bs == 1 ) {
+			//Load from CDN//
+			wp_enqueue_style( 'bootstrap-script', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css', array(), '3.3.2' );
+		} elseif ( $bs == 2 ) {
+			//Load from plugin//
+			wp_enqueue_style( 'bootstrap-script', dirname( __FILE__ ).'/assets/bootstrap/css/bootstrap.min.css', array(), '3.3.2' );
+		} elseif ( $bs == 3 ) {
+			//load from nowhere... They have it loaded elsewhere... lets check to be sure though
+		} else {
+			//load from plugin. (fallback)//
+			wp_enqueue_style( 'bootstrap-script', dirname( __FILE__ ).'/assets/bootstrap/css/bootstrap.min.css', array(), '3.3.2' );
+		}
+
 		wp_enqueue_style( 'wppm-styes', plugin_dir_url( __FILE__ ).'wppm.css', array(), '1');
 		wp_enqueue_style( 'fa-styes', plugin_dir_url( __FILE__ ).'assets/font-awesome/css/font-awesome.min.css', array(), '1');
 		wp_enqueue_style( 'bs-validate-css', plugin_dir_url( __FILE__ ).'assets/css/min/bootstrapValidator.min.css', array(), '.52');
@@ -226,28 +253,6 @@ class wpPropertyManager {
 			 }
         }
         load_template( $template );
-	}
-
-	/**
-	* Register the admin options page for the plugin
-	* 
-	* @since 0.8
-	* @access public
-	* 
-	*/
-	function wppm_admin() {
-		add_options_page( 'WP Property Manager', 'Property Manager', 'manage_options', 'wppm-options', array( $this, '_wppm_options' ) );
-	}
-	
-	/**
-	* Including the actual options page to be displayed in the admin.
-	* 
-	* @since 0.8
-	* @access private
-	* 
-	*/
-	function _wppm_options() {
-		require_once ('wppm-options.php');
 	}
 
 	/**
@@ -527,37 +532,60 @@ class wpPropertyManager {
 	}
 	
 	function share_property() {
+		global $redux_options;
 
 		$data = $_POST['data'];
+		$property_link = '<a href="'.$data['permalink'].'">'.$data['permalink'].'</a>';
+		$template = $redux_options['opt-eaf-template'];
+		$from_email = $redux_options['opt-eaf-from'];
 
-		if (isset( $data['sent'] ) && wp_verify_nonce( $data['sent'], 'send_to_friend' ) ) {
-          	if ( !empty( $data['friends_email'] ) && !empty( $data['friends_name'] )&& !empty( $data['your_name'] ) && !empty( $data['your_email'] ) && !empty( $data['property_id'] ) ) {
-          		$to = $data['friends_email'];
-          		$subject = 'Property for rent';
-          		$message = 'Hello '. $data['friends_name'] . ','."\r\n\r\n";
-          		$message .= 'I found a property for rent that you may be interested in seeing.'."\r\n";
-          		$message .= 'To view the unit, http://www.shoremanagement.com/units/view/' . $data['property_id'] . ' click here.'."\r\n\r\n";
-          		$message .= $data['your_name'];
+		if ( !empty( $from_email ) && !empty( $template ) ) {
+			// Prep the template //
+			$template = str_replace( '{{property-link}}', $property_link, $template );
+			$template = str_replace( '{{your-name}}', $data['your_name'], $template );
+			$template = str_replace( '{{your-email}}', $data['your_email'], $template );
+			$template = str_replace( '{{friends-name}}', $data['friends_name'], $template );
+			$template = str_replace( '{{friends-email}}', $data['friends_email'], $template );
 
-          		$headers = 'From: ' . $data['your_name'] . '<' . $data['your_email'] . '>'."\r\n";
-          		$headers .= 'Reply-To: ' . $data['your_email'] . "\r\n";
+			if (isset( $data['sent'] ) && wp_verify_nonce( $data['sent'], 'send_to_friend' ) ) {
+	          	if ( !empty( $data['friends_email'] ) && !empty( $data['friends_name'] )&& !empty( $data['your_name'] ) && !empty( $data['your_email'] ) && !empty( $data['permalink'] ) ) {
+	          		
+	          		$to = $data['friends_email'];
+	          		$subject = $redux_options['opt-eaf-subject'];
+	          		$message = '<html><body>'.$template.'</body></html>';
+					
+	          		$headers = 'From: '.$from_email."\r\n";
+	          		$headers .= 'Reply-To: '.$from_email."\r\n";
+	          		$headers .= "MIME-Version: 1.0\r\n";
+					$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 
-          		mail($to, $subject, $message, $headers);
+	          		mail( $to, $subject, $message, $headers );
 
-          		$response = array(
-          			'success' => true,
-          			'message' => 'An email has been sent to '.$data['friends_name']
-          		);
-          		echo json_encode( $response );
-          	} else {
-          		$response = array(
-          			'success' => false,
-          			'message' => 'Not all form fields were completed, please try again.'
-          		);
-          		echo json_encode( $response );
-          	}
-          	die();
-     	}
+	          		$response = array(
+	          			'success' => true,
+	          			'message' => 'An email has been sent to '.$data['friends_name']
+	          		);
+	          		echo json_encode( $response );
+
+	          	} else {
+	          		$response = array(
+	          			'success' => false,
+	          			'message' => 'Not all form fields were completed, please try again.'
+	          		);
+	          		echo json_encode( $response );
+	          	}
+	          	die();
+	     	}
+
+		} else {
+			$response = array(
+      			'success' => false,
+      			'message' => 'There was a configuration problem with the "From" email address. This is likely because it is not set in the admin settings'
+      		);
+      		echo json_encode( $response );
+      		die();
+		}
+
 	}
 	
 

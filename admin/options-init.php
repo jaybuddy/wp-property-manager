@@ -249,6 +249,33 @@ if (!class_exists('admin_folder_Redux_Framework_config')) {
                         'type'      => 'text',
                         'title'     => __('Company Name', 'wppm'),
                     ),
+                    
+                    array(
+                        'id'        => 'opt-bootstrap',
+                        'type'      => 'radio',
+                        'title'     => __('How would you like us to load Twitter Bootstrap?', 'wppm'),
+                        
+                         //Must provide key => value pairs for radio options
+                        'options'   => array(
+                            '1' => 'Load it from the CDN (//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css/js)', 
+                            '2' => 'Load it from within this plugin. (Will overwrite if you already use bootstrap in your theme.)', 
+                            '3' => 'I already have it loaded in another theme/plugin. Load it from there!'
+                        ),
+                        'default'   => '2'
+                    ),
+
+                    array(
+                        'id'        => 'section-documents-start',
+                        'type'      => 'section',
+                        'title'     => __('Document Options', 'wppm'),
+                    ),
+                    array(
+                        'id'        => 'opt-enable-app-download',
+                        'type'      => 'checkbox',
+                        'title'     => __('Enable Application Downloads', 'wppm'),
+                        'subtitle'      => __('This will allow users to download an Application for Rent. (You can upload your application below)', 'wppm'),
+                        'default'   => '1'// 1 = on | 0 = off
+                    ),
                     array(
                         'id'        => 'opt-default-application',
                         'type'      => 'media',
@@ -258,13 +285,48 @@ if (!class_exists('admin_folder_Redux_Framework_config')) {
                         'desc'      => __('Upload your fallback Application to Rent. This can be overwritten on individual property pages if you have different applications for different properties.', 'wppm')
                     ),
 
-                    array(
-                        'id'        => 'section-media-start',
+                     array(
+                        'id'        => 'section-email-start',
                         'type'      => 'section',
-                        'title'     => __('Media Options', 'wppm'),
-                        'subtitle'  => __('With the "section" field you can create indent option sections.', 'wppm'),
-                        'indent'    => true // Indent all options below until the next 'section' option is set.
+                        'title'     => __('Email to A Friend Options', 'wppm'),
                     ),
+                     array(
+                        'id'        => 'opt-enable-email-a-friend',
+                        'type'      => 'checkbox',
+                        'title'     => __('Enable Email To A Friend', 'wppm'),
+                        'subtitle'      => __('This will allow users to email properties to a friend.', 'wppm'),
+                        'default'   => '1'// 1 = on | 0 = off
+                    ),
+                     array(
+                        'id'        => 'opt-eaf-from',
+                        'type'      => 'text',
+                        'title'     => __('"From" Email Address', 'wppm'),
+                        'subtitle'      => __('Enter a valid email address that the "Email A Friend" emails will be sent from.', 'wppm'),
+                        'validate'  => 'email',
+                        'msg'       => 'Please enter a valid email address.',
+                        'default'   => get_bloginfo('admin_email'),
+                    ),
+                     array(
+                        'id'        => 'opt-eaf-subject',
+                        'type'      => 'text',
+                        'title'     => __('Email Subject', 'wppm'),
+                    ),
+                    array(
+                        'id'        => 'opt-eaf-template',
+                        'type'      => 'editor',
+                        'args'      => array('media_buttons' => false),
+                        'title'     => __('Email A Friend Template', 'wppm'),
+                        'subtitle'  => __('You can use the following fields from the Email A Friend Form: {{property-link}}, {{your-name}}, {{your-email}}, {{friends-name}}, {{friends-email}} ', 'wppm'),
+                        'default'   => '',
+                    ),
+                    
+                ),
+            );
+
+            $this->sections[] = array(
+                'icon'      => 'el-icon-cogs',
+                'title'     => __('Listing Archive Page', 'wppm'),
+                'fields'    => array(
                     array(
                         'id'        => 'opt-media',
                         'type'      => 'media',
@@ -508,13 +570,6 @@ if (!class_exists('admin_folder_Redux_Framework_config')) {
                             'line-height'   => '40px'),
                         'preview' => array('text' => 'ooga booga'),
                     ),
-                ),
-            );
-
-            $this->sections[] = array(
-                'icon'      => 'el-icon-cogs',
-                'title'     => __('Listing Archive Page', 'wppm'),
-                'fields'    => array(
                     array(
                         'id'        => 'opt-layout',
                         'type'      => 'image_select',
@@ -1528,21 +1583,6 @@ if (!class_exists('admin_folder_Redux_Framework_config')) {
                 'title' => 'Visit us on GitHub',
                 'icon'  => 'el-icon-github'
                 //'img'   => '', // You can use icon OR img. IMG needs to be a full URL.
-            );
-            $this->args['share_icons'][] = array(
-                'url'   => 'https://www.facebook.com/pages/Redux-Framework/243141545850368',
-                'title' => 'Like us on Facebook',
-                'icon'  => 'el-icon-facebook'
-            );
-            $this->args['share_icons'][] = array(
-                'url'   => 'http://twitter.com/reduxframework',
-                'title' => 'Follow us on Twitter',
-                'icon'  => 'el-icon-twitter'
-            );
-            $this->args['share_icons'][] = array(
-                'url'   => 'http://www.linkedin.com/company/redux-framework',
-                'title' => 'Find us on LinkedIn',
-                'icon'  => 'el-icon-linkedin'
             );
 
         }

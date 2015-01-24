@@ -143,6 +143,31 @@
 			
 		}
 
-		
+	/*
+		If downloading applications is enabled, this function determins whether the specific unit has a custom application or if we should just use
+		the fallback application that is set on the options page.
+	*/
+		function the_application( $rental ) {
+			global $redux_options;
+			if ( $redux_options['opt-enable-app-download'] == '1' ) {
+
+				if ( !empty( $rental['application'][0] ) )  {
+					return "<a target='_blank' href='".$rental['application'][0]."'><button type='button' class='btn btn-wppm apply-now'><i class='fa fa-pencil'></i><span class='hidden-xs'> Apply Now!</span></button></a>";
+				} else {
+					return "<a target='_blank' href='".$redux_options['opt-default-application']['url']."'><button type='button' class='btn btn-wppm apply-now'><i class='fa fa-pencil'></i><span class='hidden-xs'> Apply Now!</span></button></a>";
+				}
+			} 	
+		}
+
+	/*
+		If Email A Friend is enabled, this frunction will display the button.
+	*/
+		function the_email_a_friend() {
+			global $redux_options;
+			if ( $redux_options['opt-enable-email-a-friend'] == '1' ) {
+				return "<button type='button' class='btn btn-wppm' data-toggle='modal' data-target='#shareModal'><i class='fa fa-share'></i><span class='hidden-xs'> Share</span></button>";
+			}
+			
+		}
 
 ?>
