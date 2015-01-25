@@ -23,11 +23,8 @@
 			if (empty($phototext)) {
               	echo "Were sorry, we do not have any photos for this unit yet. Check back soon!";
             } else {
-              	$sections = explode(' ', $phototext);
-              	$image_string = end($sections);
-              	$pattern = '/\"([^\"]*?)\"/';
-              	$images = preg_match($pattern, $image_string, $photos);
-              	$all_images = explode(',', $photos[1]);
+              	
+              	$all_images = explode(',', $rental['photo-gal'][0]);
 
               	//Prep full-size and thumbnails//
               	$rental['gallery_images'] = array();

@@ -100,6 +100,9 @@ class wpPropertyManager {
 		wp_enqueue_script('media-upload');
 		wp_enqueue_script('thickbox');
 		wp_enqueue_script('jquery');
+
+		wp_register_script('wppm-admin-gallery', WP_PLUGIN_URL.'/wp-property-manager/assets/js/admin-gallery.js', array('jquery','media-upload','thickbox'));
+		wp_enqueue_script('wppm-admin-gallery');
 	}
 
 	function load_admin_styles() {
