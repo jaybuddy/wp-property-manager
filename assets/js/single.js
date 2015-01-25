@@ -25,39 +25,6 @@
 
          $('.modal-dialog').css({'width':$(window).width() - 50, 'max-height':$(window).height() - 50});
 
-         /* Google Maps Javascript */
-
-         function initialize_sv() {
-	      	var myOptions = {
-		        	zoom: 14,
-		        	center: window.latlng,
-		        	mapTypeId: google.maps.MapTypeId.TERRAIN,
-		        	navigationControl: true,
-		        	navigationControlOptions: {
-		          	style: google.maps.NavigationControlStyle.SMALL
-	        	}
-	      	};
-	      	var map = new google.maps.Map(document.getElementById("frontend-street-view"), myOptions);
-	      	var panorama = new google.maps.StreetViewPanorama(document.getElementById("frontend-street-view"), window.panoramaOptions);
-	      	map.setStreetView(panorama);   
-	  	}
-	  
-	  	function initialize_map() {
-	    	var myOptions = {
-	      		zoom: 14,
-	      		center: window.latlng,
-	      		mapTypeId: google.maps.MapTypeId.TERRAIN,
-	    	};
-	    	var map = new google.maps.Map(document.getElementById("frontend-map"), myOptions);
-	    	var marker = new google.maps.Marker({
-	            position: window.latlng,
-	            map: map 
-	     	});
-	   		marker.setMap(map);
-	  	}
-
-	  	initialize_map();
-	  	initialize_sv();
 
 	  	/* Slideshow Modal Javascript */
 

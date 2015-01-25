@@ -12,6 +12,7 @@
 get_header(); ?>
 
 <?php 
+	global $redux_options;
 	include(ABSPATH.'wp-content/plugins/wp-property-manager/includes/helpers.php'); 
 	$posts = setupArchiveUnitsData();
 ?>
@@ -42,12 +43,18 @@ get_header(); ?>
 			    </div>
 			</div>
 		    
-		    <div class='archive-content-section row' id='list-view-content'>
+		    <div class='archive-content-section' id='list-view-content'>
 		    	<div class='container'>
-			    	<div class='col-xs-12 col-sm-8 col-md-8 col-lg-8'>
+		    		<div class='row'>
+		    			<div class='hook-archive-top'>
+			    			<?php echo hook_archive_top(); ?>
+			    		</div>
+			    	</div>
+			    	<div class='row'>
+			    		<div class='col-xs-12 col-sm-8 col-md-8 col-lg-8'>
 			    		<div class='article-wrap'>
 				    		<?php foreach($posts as $post) { ?>
-				    			<?php $listingAge = listingAge($post->meta['last_avail_date'][0]); ?>
+				    			
 					    		<article id='p<?php echo $post->ID; ?>' class='units-tile'>
 					    			<header>
 					    				<address>
@@ -76,14 +83,13 @@ get_header(); ?>
 					    			</div>
 					    			<div class='clear'></div>
 					    			<footer>
-					    				<div class='freshness <?php echo $listingAge["class"]; ?>'><i class="fa fa-clock-o"></i> Posted <?php echo $listingAge['text']; ?></div>
+					    				<?php echo listing_age(); ?>
 					    			</footer>
 					    		</article>
 				    		<?php } ?>
 				    	</div>
-			    	</div>
-
-			    	<div class='hidden-xs col-sm-4 col-md-4 col-lg-4'>
+			    		</div>
+			    		<div class='hidden-xs col-sm-4 col-md-4 col-lg-4'>
 			    		<aside id='units-list'>
 			    			<div id='floating-list'>
 			    				<ul>
@@ -107,12 +113,21 @@ get_header(); ?>
 				    					
 			    					<?php } ?>
 			    				</ul>
+			    				<div class='hook-archive-top'>
+			    					<?php echo hook_archive_sidebar_bottom(); ?>
+			    				</div>
 			    			</div>
 			    		</aside>
-			    	</div>
-				    
+			    		</div>
+				    </div>
+				    <div class='row'>
+				    	<div class='hook-archive-bottom'>
+							<?php echo hook_archive_bottom(); ?>
+						</div>
+					</div>
 			    </div>
 			</div>
+			
 
 			<div class='archive-content-section row' id='map-view-content' style='display:none'>
 		    	<div class='container'>

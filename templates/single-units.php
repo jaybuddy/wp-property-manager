@@ -55,7 +55,6 @@
                               
                               <?php echo the_email_a_friend(); ?>
                               <?php echo the_application( $rental ); ?>
-
                          </div>
                     </div>
                </div>
@@ -64,7 +63,9 @@
      <div class='single-content-section row'>
           <div class='container'>
                <div class='row'>
-                    <?php do_action('unit_head'); ?> 
+                    <div class='hook-single-top'>
+                      <?php echo hook_single_top(); ?>
+                    </div>
                </div>
                <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
                     <div class='row'>
@@ -243,31 +244,11 @@
                                              </div>
                                         </div>
                                    </section>
-                                   <?php if ($rental['ui_show_gm'][0] != 'No') { ?>
-                                        <section class='map google-map'>
-                                             <div class='panel panel-default'>
-                                                  <div class='panel-heading'>Map</div>
-                                                  <div class='panel-body'>
-                                                       <div id='frontend-map'></div>
-                                                       <a class='btn btn-primary btn-xs' href=''>
-                                                           <i class='fa fa-globe'></i> View larger
-                                                       </a>
-                                                  </div>
-                                             </div>
-                                        </section>
-                                   <?php } ?>
+                                   <?php echo the_google_map( $rental['ui_show_gm'][0] ); ?>
+                                   <?php echo the_google_sv( $rental['ui_show_gsv'][0] ); ?>
+                                   
                                    <?php if ($rental['ui_show_gsv'][0] != 'No') { ?>
-                                        <section class='map sv-map'>
-                                             <div class='panel panel-default'>
-                                                  <div class='panel-heading'>Street View</div>
-                                                  <div class='panel-body'>
-                                                       <div id='frontend-street-view'></div>
-                                                       <a class='btn btn-primary btn-xs' href=''>
-                                                           <i class='fa fa-globe'></i> View larger
-                                                       </a>
-                                                  </div>
-                                             </div>
-                                        </section>
+                                        
                                    <?php } ?>  
                               </div>    
                          </div>
@@ -280,7 +261,9 @@
                <?php endif; ?>
 
                <div class='row'>
-                    <?php do_action('unit_foot'); ?> 
+                    <div class='hook-single-bottom'>
+                      <?php echo hook_single_bottom(); ?>
+                    </div>
                </div>
           </div>
      </div>

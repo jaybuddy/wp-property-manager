@@ -1,4 +1,5 @@
 <?php
+	global $redux_options;
 
 	/*
 		setupSingleUnitData takes the ID of the unit (post) and gets all the unit's meta fields as wall as sets up an 
@@ -144,8 +145,8 @@
 		}
 
 	/*
-		If downloading applications is enabled, this function determins whether the specific unit has a custom application or if we should just use
-		the fallback application that is set on the options page.
+		If downloading applications is enabled, this function determins whether the specific unit has a custom 
+		application or if we should just use the fallback application that is set on the options page.
 	*/
 		function the_application( $rental ) {
 			global $redux_options;
@@ -167,7 +168,75 @@
 			if ( $redux_options['opt-enable-email-a-friend'] == '1' ) {
 				return "<button type='button' class='btn btn-wppm' data-toggle='modal' data-target='#shareModal'><i class='fa fa-share'></i><span class='hidden-xs'> Share</span></button>";
 			}
-			
 		}
+
+	/*
+		This function determines whether or not to display the google map on the single template. If so, it will
+		return the map otherwise it returns an empty string.
+	*/
+		function the_google_map( $perm ) {
+			global $redux_options;
+			
+			if ( $perm == 'No' && $redux_options['enable-google-map'] == 0 ) {
+				//global no, local no. return nothing.//
+				return '';
+			} elseif ( $redux_options['enable-google-map'] == 1 && $perm == 'No' ) {
+				//global yes, local no. return nothing.//
+				return '';
+			} elseif ( $redux_options['enable-google-map'] == 0 && $perm == 'Yes' ) {
+				//global no, local yes. return map.//
+				return "<section class='map google-map'><div class='panel panel-default'><div class='panel-heading'>Map</div><div class='panel-body'><div id='frontend-map'></div><a class='btn btn-primary btn-xs' href=''><i class='fa fa-globe'></i> View larger</a></div></div></section><script type='text/javascript' src='".get_bloginfo('url')."/wp-content/plugins/wp-property-manager/assets/js/min/gm-min.js'></script>";
+
+			} elseif ( $redux_options['enable-google-map'] == 1 && $perm == 'Yes' ) {
+				//global yes, local yes. return map//
+				return "<section class='map google-map'><div class='panel panel-default'><div class='panel-heading'>Map</div><div class='panel-body'><div id='frontend-map'></div><a class='btn btn-primary btn-xs' href=''><i class='fa fa-globe'></i> View larger</a></div></div></section><script type='text/javascript' src='".get_bloginfo('url')."/wp-content/plugins/wp-property-manager/assets/js/min/gm-min.js'></script>";
+			}        
+		}
+
+	/*
+		This function determines whether or not to display the google street view on the single template. If so, it will
+		return the SV otherwise it returns an empty string.
+	*/
+
+		function the_google_sv( $perm ) {
+
+			global $redux_options;
+			
+			if ( $perm == 'No' && $redux_options['enable-sv'] == 0 ) {
+				//global no, local no. return nothing.//
+				return '';
+			} elseif ( $redux_options['enable-sv'] == 1 && $perm == 'No' ) {
+				//global yes, local no. return nothing.//
+				return '';
+			} elseif ( $redux_options['enable-sv'] == 0 && $perm == 'Yes' ) {
+				//global no, local yes. return map.//
+				return "<section class='map sv-map'><div class='panel panel-default'><div class='panel-heading'>Street View</div><div class='panel-body'><div id='frontend-street-view'></div><a class='btn btn-primary btn-xs' href=''><i class='fa fa-globe'></i> View larger</a></div></div></section><script type='text/javascript' src='".get_bloginfo('url')."/wp-content/plugins/wp-property-manager/assets/js/min/sv-min.js'></script>";
+
+			} elseif ( $redux_options['enable-sv'] == 1 && $perm == 'Yes' ) {
+				//global yes, local yes. return map//
+				return "<section class='map sv-map'><div class='panel panel-default'><div class='panel-heading'>Street View</div><div class='panel-body'><div id='frontend-street-view'></div><a class='btn btn-primary btn-xs' href=''><i class='fa fa-globe'></i> View larger</a></div></div></section><script type='text/javascript' src='".get_bloginfo('url')."/wp-content/plugins/wp-property-manager/assets/js/min/sv-min.js'></script>";
+			}   
+						
+		}
+
+	/*
+		This function determines whether or not to display the listing age on the footer of the listing card on the 
+		archive page.
+	*/
+		function listing_age() {
+			global $post;
+			global $redux_options;
+
+			if ( $redux_options['enable-listing-age'] == '1' ) {
+				$listingAge = listingAge($post->meta['last_avail_date'][0]);
+				return "<div class='freshness ".$listingAge["class"]."'><i class='fa fa-clock-o'></i> Posted ".$listingAge['text']."</div>";
+			}
+		}
+
+	/*
+		include the template hooks
+	*/
+		include( dirname( __FILE__ ) .'/hooks.php' );
+		
 
 ?>

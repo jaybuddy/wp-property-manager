@@ -238,6 +238,22 @@ if (!class_exists('admin_folder_Redux_Framework_config')) {
 
 
             // ACTUAL DECLARATION OF SECTIONS
+            if (file_exists(dirname(__FILE__) . '/../DOCUMENTATION.md')) {
+                $this->sections['plugin_docs'] = array(
+                    'icon'      => 'el-icon-list-alt',
+                    'title'     => __('Getting Started', 'wppm'),
+                    'fields'    => array(
+                        array(
+                            'id'        => '17',
+                            'type'      => 'raw',
+                            'markdown'  => true,
+                            'content'   => file_get_contents(dirname(__FILE__) . '/../DOCUMENTATION.md')
+                        ),
+                    ),
+                );
+            }
+
+
             $this->sections[] = array(
                 'title'     => __('General Settings', 'wppm'),
                 'desc'      => __('Put in a description here', 'wppm'),
@@ -264,11 +280,135 @@ if (!class_exists('admin_folder_Redux_Framework_config')) {
                         'default'   => '2'
                     ),
 
+                
+                     
+                    
+                ),
+            );
+
+            $this->sections[] = array(
+                'icon'      => 'el-icon-cogs',
+                'title'     => __('Listing Archive Page', 'wppm'),
+                'fields'    => array(
+                     array(
+                        'id'       => 'section-la-opt-start',
+                        'type'     => 'section',
+                        'title'    => __( 'Archive Page Options', 'wppm' ),
+                        'indent'   => false, // Indent all options below until the next 'section' option is set.
+                     ),
+                        array(
+                            'id'        => 'enable-listing-age',
+                            'type'      => 'checkbox',
+                            'title'     => __('Enable Listing Age', 'wppm'),
+                            'subtitle'      => __('This will display the age of the listing at the bottom of the listing.', 'wppm'),
+                            'default'   => '1'// 1 = on | 0 = off
+                        ),
                     array(
-                        'id'        => 'section-documents-start',
-                        'type'      => 'section',
-                        'title'     => __('Document Options', 'wppm'),
+                        'id'       => 'section-la-opts-end',
+                        'type'     => 'section',
+                        'indent'   => false, // Indent all options below until the next 'section' option is set.
                     ),
+                    array(
+                        'id'       => 'section-hooks-start',
+                        'type'     => 'section',
+                        'title'    => __( 'Archive Page Hooks', 'wppm' ),
+                        'indent'   => false, // Indent all options below until the next 'section' option is set.
+                    ),
+                    array(
+                        'id'        => 'hook-archive-top',
+                        'type'      => 'editor',
+                        'args'      => array(),
+                        'title'     => __('Top HTML', 'wppm'),
+                        'subtitle'  => __('This is text (HTML) that is displayed above the list of listings. It is optional.', 'wppm'),
+                        'default'   => '',
+                    ),
+                    array(
+                        'id'        => 'hook-archive-sidebar-bottom',
+                        'type'      => 'editor',
+                        'args'      => array(),
+                        'title'     => __('Sidebar Bottom HTML', 'wppm'),
+                        'subtitle'  => __('This is text (HTML) that is displayed below the list of units in the right sidebar of the archive page. It is optional.', 'wppm'),
+                        'default'   => '',
+                    ),
+                    array(
+                        'id'        => 'hook-archive-bottom',
+                        'type'      => 'editor',
+                        'args'      => array(),
+                        'title'     => __('Bottom HTML', 'wppm'),
+                        'subtitle'  => __('This is text (HTML) that is displayed at the bottom of the archive page. It is optional.', 'wppm'),
+                        'default'   => '',
+                    ),
+                    array(
+                        'id'       => 'section-hooks-end',
+                        'type'     => 'section',
+                        'indent'   => false, // Indent all options below until the next 'section' option is set.
+                    ),
+                )
+            );
+
+            $this->sections[] = array(
+                'icon'      => 'el-icon-website',
+                'title'     => __('Single Listing Page', 'wppm'),
+                'fields'    => array(
+                    array(
+                        'id'       => 'section-single-opt-start',
+                        'type'     => 'section',
+                        'title'    => __( 'Single Page Options', 'wppm' ),
+                        'indent'   => false, // Indent all options below until the next 'section' option is set.
+                     ),
+                        array(
+                            'id'        => 'enable-google-map',
+                            'type'      => 'checkbox',
+                            'title'     => __('Globally Enable Google Maps', 'wppm'),
+                            'subtitle'      => __('This makes Google Maps show on all listings, this can be overwritten on the individual listing page.', 'wppm'),
+                            'default'   => '1'// 1 = on | 0 = off
+                        ),
+                        array(
+                            'id'        => 'enable-sv',
+                            'type'      => 'checkbox',
+                            'title'     => __('Globally Enable Google Street View', 'wppm'),
+                            'subtitle'      => __('This makes Google Street View show on all listings, this can be overwritten on the individual listing page.', 'wppm'),
+                            'default'   => '1'// 1 = on | 0 = off
+                        ),
+                    array(
+                        'id'       => 'section-single-opts-end',
+                        'type'     => 'section',
+                        'indent'   => false, // Indent all options below until the next 'section' option is set.
+                    ),
+                    array(
+                        'id'       => 'section-hooks-start',
+                        'type'     => 'section',
+                        'title'    => __( 'Single Page Hooks', 'wppm' ),
+                        'indent'   => false, // Indent all options below until the next 'section' option is set.
+                    ),
+                    array(
+                        'id'        => 'hook-single-top',
+                        'type'      => 'editor',
+                        'args'      => array(),
+                        'title'     => __('Top HTML', 'wppm'),
+                        'subtitle'  => __('This is text (HTML) that is displayed above the listings. It is optional.', 'wppm'),
+                        'default'   => '',
+                    ),
+                    array(
+                        'id'        => 'hook-single-bottom',
+                        'type'      => 'editor',
+                        'args'      => array(),
+                        'title'     => __('Bottom HTML', 'wppm'),
+                        'subtitle'  => __('This is text (HTML) that is displayed at the bottom of the listing. It is optional.', 'wppm'),
+                        'default'   => '',
+                    ),
+                    array(
+                        'id'       => 'section-hooks-end',
+                        'type'     => 'section',
+                        'indent'   => false, // Indent all options below until the next 'section' option is set.
+                    ),
+                )
+            );
+
+            $this->sections[] = array(
+                'icon'      => 'el-icon-list-alt',
+                'title'     => __('Document Settings', 'wppm'),
+                'fields'    => array(
                     array(
                         'id'        => 'opt-enable-app-download',
                         'type'      => 'checkbox',
@@ -282,15 +422,16 @@ if (!class_exists('admin_folder_Redux_Framework_config')) {
                         'title'     => __('Fallback Application to Rent', 'wppm'),
                         'preview'   => false,
                         'mode'      => '',
-                        'desc'      => __('Upload your fallback Application to Rent. This can be overwritten on individual property pages if you have different applications for different properties.', 'wppm')
+                        'subtitle'      => __('Upload your fallback Application to Rent. This can be overwritten on individual property pages if you have different applications for different properties.', 'wppm')
                     ),
+                ),
+            );
 
-                     array(
-                        'id'        => 'section-email-start',
-                        'type'      => 'section',
-                        'title'     => __('Email to A Friend Options', 'wppm'),
-                    ),
-                     array(
+            $this->sections[] = array(
+                'icon'      => 'el-icon-list-alt',
+                'title'     => __('Email Settings', 'wppm'),
+                'fields'    => array(
+                    array(
                         'id'        => 'opt-enable-email-a-friend',
                         'type'      => 'checkbox',
                         'title'     => __('Enable Email To A Friend', 'wppm'),
@@ -319,651 +460,17 @@ if (!class_exists('admin_folder_Redux_Framework_config')) {
                         'subtitle'  => __('You can use the following fields from the Email A Friend Form: {{property-link}}, {{your-name}}, {{your-email}}, {{friends-name}}, {{friends-email}} ', 'wppm'),
                         'default'   => '',
                     ),
-                    
                 ),
             );
 
-            $this->sections[] = array(
-                'icon'      => 'el-icon-cogs',
-                'title'     => __('Listing Archive Page', 'wppm'),
-                'fields'    => array(
-                    array(
-                        'id'        => 'opt-media',
-                        'type'      => 'media',
-                        'url'       => true,
-                        'title'     => __('Media w/ URL', 'wppm'),
-                        'compiler'  => 'true',
-                        //'mode'      => false, // Can be set to false to allow any media type, or can also be set to any mime type.
-                        'desc'      => __('Basic media uploader with disabled URL input field.', 'wppm'),
-                        'subtitle'  => __('Upload any media using the WordPress native uploader', 'wppm'),
-                        'default'   => array('url' => 'http://s.wordpress.org/style/images/codeispoetry.png'),
-                        //'hint'      => array(
-                        //    'title'     => 'Hint Title',
-                        //    'content'   => 'This is a <b>hint</b> for the media field with a Title.',
-                        //)
-                    ),
-                    array(
-                        'id'        => 'section-media-end',
-                        'type'      => 'section',
-                        'indent'    => false // Indent all options below until the next 'section' option is set.
-                    ),
-                    array(
-                        'id'        => 'media-no-url',
-                        'type'      => 'media',
-                        'title'     => __('Media w/o URL', 'wppm'),
-                        'desc'      => __('This represents the minimalistic view. It does not have the preview box or the display URL in an input box. ', 'wppm'),
-                        'subtitle'  => __('Upload any media using the WordPress native uploader', 'wppm'),
-                    ),
-                    array(
-                        'id'        => 'media-no-preview',
-                        'type'      => 'media',
-                        'preview'   => false,
-                        'title'     => __('Media No Preview', 'wppm'),
-                        'desc'      => __('This represents the minimalistic view. It does not have the preview box or the display URL in an input box. ', 'wppm'),
-                        'subtitle'  => __('Upload any media using the WordPress native uploader', 'wppm'),
-                    ),
-                    array(
-                        'id'        => 'opt-gallery',
-                        'type'      => 'gallery',
-                        'title'     => __('Add/Edit Gallery', 'so-panels'),
-                        'subtitle'  => __('Create a new Gallery by selecting existing or uploading new images using the WordPress native uploader', 'so-panels'),
-                        'desc'      => __('This is the description field, again good for additional info.', 'wppm'),
-                    ),
-                    array(
-                        'id'            => 'opt-slider-label',
-                        'type'          => 'slider',
-                        'title'         => __('Slider Example 1', 'wppm'),
-                        'subtitle'      => __('This slider displays the value as a label.', 'wppm'),
-                        'desc'          => __('Slider description. Min: 1, max: 500, step: 1, default value: 250', 'wppm'),
-                        'default'       => 250,
-                        'min'           => 1,
-                        'step'          => 1,
-                        'max'           => 500,
-                        'display_value' => 'label'
-                    ),
-                    array(
-                        'id'            => 'opt-slider-text',
-                        'type'          => 'slider',
-                        'title'         => __('Slider Example 2 with Steps (5)', 'wppm'),
-                        'subtitle'      => __('This example displays the value in a text box', 'wppm'),
-                        'desc'          => __('Slider description. Min: 0, max: 300, step: 5, default value: 75', 'wppm'),
-                        'default'       => 75,
-                        'min'           => 0,
-                        'step'          => 5,
-                        'max'           => 300,
-                        'display_value' => 'text'
-                    ),
-                    array(
-                        'id'            => 'opt-slider-select',
-                        'type'          => 'slider',
-                        'title'         => __('Slider Example 3 with two sliders', 'wppm'),
-                        'subtitle'      => __('This example displays the values in select boxes', 'wppm'),
-                        'desc'          => __('Slider description. Min: 0, max: 500, step: 5, slider 1 default value: 100, slider 2 default value: 300', 'wppm'),
-                        'default'       => array(
-                            1 => 100,
-                            2 => 300,
-                        ),
-                        'min'           => 0,
-                        'step'          => 5,
-                        'max'           => '500',
-                        'display_value' => 'select',
-                        'handles'       => 2,
-                    ),
-                    array(
-                        'id'            => 'opt-slider-float',
-                        'type'          => 'slider',
-                        'title'         => __('Slider Example 4 with float values', 'wppm'),
-                        'subtitle'      => __('This example displays float values', 'wppm'),
-                        'desc'          => __('Slider description. Min: 0, max: 1, step: .1, default value: .5', 'wppm'),
-                        'default'       => .5,
-                        'min'           => 0,
-                        'step'          => .1,
-                        'max'           => 1,
-                        'resolution'    => 0.1,
-                        'display_value' => 'text'
-                    ),
-                    array(
-                        'id'        => 'opt-spinner',
-                        'type'      => 'spinner',
-                        'title'     => __('JQuery UI Spinner Example 1', 'wppm'),
-                        'desc'      => __('JQuery UI spinner description. Min:20, max: 100, step:20, default value: 40', 'wppm'),
-                        'default'   => '40',
-                        'min'       => '20',
-                        'step'      => '20',
-                        'max'       => '100',
-                    ),
-                    array(
-                        'id'        => 'switch-on',
-                        'type'      => 'switch',
-                        'title'     => __('Switch On', 'wppm'),
-                        'subtitle'  => __('Look, it\'s on!', 'wppm'),
-                        'default'   => true,
-                    ),
-                    array(
-                        'id'        => 'switch-off',
-                        'type'      => 'switch',
-                        'title'     => __('Switch Off', 'wppm'),
-                        'subtitle'  => __('Look, it\'s on!', 'wppm'),
-                        'default'   => false,
-                    ),
-                    array(
-                        'id'        => 'switch-custom',
-                        'type'      => 'switch',
-                        'title'     => __('Switch - Custom Titles', 'wppm'),
-                        'subtitle'  => __('Look, it\'s on! Also hidden child elements!', 'wppm'),
-                        'default'   => 0,
-                        'on'        => 'Enabled',
-                        'off'       => 'Disabled',
-                    ),
-                    array(
-                        'id'        => 'switch-fold',
-                        'type'      => 'switch',
-                        'required'  => array('switch-custom', '=', '1'),
-                        'title'     => __('Switch - With Hidden Items (NESTED!)', 'wppm'),
-                        'subtitle'  => __('Also called a "fold" parent.', 'wppm'),
-                        'desc'      => __('Items set with a fold to this ID will hide unless this is set to the appropriate value.', 'wppm'),
-                        'default'   => false,
-                    ),
-                    array(
-                        'id'        => 'opt-patterns',
-                        'type'      => 'image_select',
-                        'tiles'     => true,
-                        'required'  => array('switch-fold', 'equals', '0'),
-                        'title'     => __('Images Option (with pattern=>true)', 'wppm'),
-                        'subtitle'  => __('Select a background pattern.', 'wppm'),
-                        'default'   => 0,
-                        'options'   => $sample_patterns
-                    ,
-                    ),
-                    array(
-                        'id'        => 'opt-homepage-layout',
-                        'type'      => 'sorter',
-                        'title'     => 'Layout Manager Advanced',
-                        'subtitle'  => 'You can add multiple drop areas or columns.',
-                        'compiler'  => 'true',
-                        'options'   => array(
-                            'enabled'   => array(
-                                'highlights'    => 'Highlights',
-                                'slider'        => 'Slider',
-                                'staticpage'    => 'Static Page',
-                                'services'      => 'Services'
-                            ),
-                            'disabled'  => array(
-                            ),
-                            'backup'    => array(
-                            ),
-                        ),
-                        'limits' => array(
-                            'disabled'  => 1,
-                            'backup'    => 2,
-                        ),
-                    ),
-                    
-                    array(
-                        'id'        => 'opt-homepage-layout-2',
-                        'type'      => 'sorter',
-                        'title'     => 'Homepage Layout Manager',
-                        'desc'      => 'Organize how you want the layout to appear on the homepage',
-                        'compiler'  => 'true',
-                        'options'   => array(
-                            'disabled'  => array(
-                                'highlights'    => 'Highlights',
-                                'slider'        => 'Slider',
-                            ),
-                            'enabled'   => array(
-                                'staticpage'    => 'Static Page',
-                                'services'      => 'Services'
-                            ),
-                        ),
-                    ),
-                    array(
-                        'id'        => 'opt-slides',
-                        'type'      => 'slides',
-                        'title'     => __('Slides Options', 'wppm'),
-                        'subtitle'  => __('Unlimited slides with drag and drop sortings.', 'wppm'),
-                        'desc'      => __('This field will store all slides values into a multidimensional array to use into a foreach loop.', 'wppm'),
-                        'placeholder'   => array(
-                            'title'         => __('This is a title', 'wppm'),
-                            'description'   => __('Description Here', 'wppm'),
-                            'url'           => __('Give us a link!', 'wppm'),
-                        ),
-                    ),
-                    array(
-                        'id'        => 'opt-presets',
-                        'type'      => 'image_select',
-                        'presets'   => true,
-                        'title'     => __('Preset', 'wppm'),
-                        'subtitle'  => __('This allows you to set a json string or array to override multiple preferences in your theme.', 'wppm'),
-                        'default'   => 0,
-                        'desc'      => __('This allows you to set a json string or array to override multiple preferences in your theme.', 'wppm'),
-                        'options'   => array(
-                            '1'         => array('alt' => 'Preset 1', 'img' => ReduxFramework::$_url . '../sample/presets/preset1.png', 'presets' => array('switch-on' => 1, 'switch-off' => 1, 'switch-custom' => 1)),
-                            '2'         => array('alt' => 'Preset 2', 'img' => ReduxFramework::$_url . '../sample/presets/preset2.png', 'presets' => '{"slider1":"1", "slider2":"0", "switch-on":"0"}'),
-                        ),
-                    ),
-                    array(
-                        'id'            => 'opt-typography',
-                        'type'          => 'typography',
-                        'title'         => __('Typography', 'wppm'),
-                        //'compiler'      => true,  // Use if you want to hook in your own CSS compiler
-                        'google'        => true,    // Disable google fonts. Won't work if you haven't defined your google api key
-                        'font-backup'   => true,    // Select a backup non-google font in addition to a google font
-                        //'font-style'    => false, // Includes font-style and weight. Can use font-style or font-weight to declare
-                        //'subsets'       => false, // Only appears if google is true and subsets not set to false
-                        //'font-size'     => false,
-                        //'line-height'   => false,
-                        //'word-spacing'  => true,  // Defaults to false
-                        //'letter-spacing'=> true,  // Defaults to false
-                        //'color'         => false,
-                        //'preview'       => false, // Disable the previewer
-                        'all_styles'    => true,    // Enable all Google Font style/weight variations to be added to the page
-                        'output'        => array('h2.site-description'), // An array of CSS selectors to apply this font style to dynamically
-                        'compiler'      => array('h2.site-description-compiler'), // An array of CSS selectors to apply this font style to dynamically
-                        'units'         => 'px', // Defaults to px
-                        'subtitle'      => __('Typography option with each property can be called individually.', 'wppm'),
-                        'default'       => array(
-                            'color'         => '#333',
-                            'font-style'    => '700',
-                            'font-family'   => 'Abel',
-                            'google'        => true,
-                            'font-size'     => '33px',
-                            'line-height'   => '40px'),
-                        'preview' => array('text' => 'ooga booga'),
-                    ),
-                    array(
-                        'id'        => 'opt-layout',
-                        'type'      => 'image_select',
-                        'compiler'  => true,
-                        'title'     => __('Main Layout', 'wppm'),
-                        'subtitle'  => __('Select main content and sidebar alignment. Choose between 1, 2 or 3 column layout.', 'wppm'),
-                        'options'   => array(
-                            '1' => array('alt' => '1 Column',       'img' => ReduxFramework::$_url . 'assets/img/1col.png'),
-                            '2' => array('alt' => '2 Column Left',  'img' => ReduxFramework::$_url . 'assets/img/2cl.png'),
-                            '3' => array('alt' => '2 Column Right', 'img' => ReduxFramework::$_url . 'assets/img/2cr.png'),
-                            '4' => array('alt' => '3 Column Middle','img' => ReduxFramework::$_url . 'assets/img/3cm.png'),
-                            '5' => array('alt' => '3 Column Left',  'img' => ReduxFramework::$_url . 'assets/img/3cl.png'),
-                            '6' => array('alt' => '3 Column Right', 'img' => ReduxFramework::$_url . 'assets/img/3cr.png')
-                        ),
-                        'default'   => '2'
-                    ),
-                    array(
-                        'id'        => 'opt-textarea',
-                        'type'      => 'textarea',
-                        'required'  => array('layout', 'equals', '1'),
-                        'title'     => __('Tracking Code', 'wppm'),
-                        'subtitle'  => __('Paste your Google Analytics (or other) tracking code here. This will be added into the footer template of your theme.', 'wppm'),
-                        'validate'  => 'js',
-                        'desc'      => 'Validate that it\'s javascript!',
-                    ),
-                    array(
-                        'id'        => 'opt-ace-editor-css',
-                        'type'      => 'ace_editor',
-                        'title'     => __('CSS Code', 'wppm'),
-                        'subtitle'  => __('Paste your CSS code here.', 'wppm'),
-                        'mode'      => 'css',
-                        'theme'     => 'monokai',
-                        'desc'      => 'Possible modes can be found at <a href="http://ace.c9.io" target="_blank">http://ace.c9.io/</a>.',
-                        'default'   => "#header{\nmargin: 0 auto;\n}"
-                    ),
-                    array(
-                        'id'        => 'opt-ace-editor-js',
-                        'type'      => 'ace_editor',
-                        'title'     => __('JS Code', 'wppm'),
-                        'subtitle'  => __('Paste your JS code here.', 'wppm'),
-                        'mode'      => 'javascript',
-                        'theme'     => 'chrome',
-                        'desc'      => 'Possible modes can be found at <a href="http://ace.c9.io" target="_blank">http://ace.c9.io/</a>.',
-                        'default'   => "jQuery(document).ready(function(){\n\n});"
-                    ),
-                    array(
-                        'id'        => 'opt-ace-editor-php',
-                        'type'      => 'ace_editor',
-                        'title'     => __('PHP Code', 'wppm'),
-                        'subtitle'  => __('Paste your PHP code here.', 'wppm'),
-                        'mode'      => 'php',
-                        'theme'     => 'chrome',
-                        'desc'      => 'Possible modes can be found at <a href="http://ace.c9.io" target="_blank">http://ace.c9.io/</a>.',
-                        'default'   => '<?php\nisset ( $redux ) ? true : false;\n?>'
-                    ),
-                    array(
-                        'id'        => 'opt-editor',
-                        'type'      => 'editor',
-                        'title'     => __('Footer Text', 'wppm'),
-                        'subtitle'  => __('You can use the following shortcodes in your footer text: [wp-url] [site-url] [theme-url] [login-url] [logout-url] [site-title] [site-tagline] [current-year]', 'wppm'),
-                        'default'   => 'Powered by Redux Framework.',
-                    ),
-                    array(
-                        'id'        => 'password',
-                        'type'      => 'password',
-                        'username'  => true,
-                        'title'     => 'SMTP Account',
-                        //'placeholder' => array('username' => 'Enter your Username')
-                    )
-                )
-            );
-
-            $this->sections[] = array(
-                'icon'      => 'el-icon-website',
-                'title'     => __('Single Listing Page', 'wppm'),
-                'fields'    => array(
-                    array(
-                        'id'        => 'opt-select-stylesheet',
-                        'type'      => 'select',
-                        'title'     => __('Theme Stylesheet', 'wppm'),
-                        'subtitle'  => __('Select your themes alternative color scheme.', 'wppm'),
-                        'options'   => array('default.css' => 'default.css', 'color1.css' => 'color1.css'),
-                        'default'   => 'default.css',
-                    ),
-                    array(
-                        'id'        => 'opt-color-background',
-                        'type'      => 'color',
-                        'output'    => array('.site-title'),
-                        'title'     => __('Body Background Color', 'wppm'),
-                        'subtitle'  => __('Pick a background color for the theme (default: #fff).', 'wppm'),
-                        'default'   => '#FFFFFF',
-                        'validate'  => 'color',
-                    ),
-                    array(
-                        'id'        => 'opt-background',
-                        'type'      => 'background',
-                        'output'    => array('body'),
-                        'title'     => __('Body Background', 'wppm'),
-                        'subtitle'  => __('Body background with image, color, etc.', 'wppm'),
-                        //'default'   => '#FFFFFF',
-                    ),
-                    array(
-                        'id'        => 'opt-color-footer',
-                        'type'      => 'color',
-                        'title'     => __('Footer Background Color', 'wppm'),
-                        'subtitle'  => __('Pick a background color for the footer (default: #dd9933).', 'wppm'),
-                        'default'   => '#dd9933',
-                        'validate'  => 'color',
-                    ),
-                    array(
-                        'id'        => 'opt-color-rgba',
-                        'type'      => 'color_rgba',
-                        'title'     => __('Color RGBA - BETA', 'wppm'),
-                        'subtitle'  => __('Gives you the RGBA color. Still quite experimental. Use at your own risk.', 'wppm'),
-                        'default'   => array('color' => '#dd9933', 'alpha' => '1.0'),
-                        'output'    => array('body'),
-                        'mode'      => 'background',
-                        'validate'  => 'colorrgba',
-                    ),
-                    array(
-                        'id'        => 'opt-color-header',
-                        'type'      => 'color_gradient',
-                        'title'     => __('Header Gradient Color Option', 'wppm'),
-                        'subtitle'  => __('Only color validation can be done on this field type', 'wppm'),
-                        'desc'      => __('This is the description field, again good for additional info.', 'wppm'),
-                        'default'   => array(
-                            'from'      => '#1e73be', 
-                            'to'        => '#00897e'
-                        )
-                    ),
-                    array(
-                        'id'        => 'opt-link-color',
-                        'type'      => 'link_color',
-                        'title'     => __('Links Color Option', 'wppm'),
-                        'subtitle'  => __('Only color validation can be done on this field type', 'wppm'),
-                        'desc'      => __('This is the description field, again good for additional info.', 'wppm'),
-                        //'regular'   => false, // Disable Regular Color
-                        //'hover'     => false, // Disable Hover Color
-                        //'active'    => false, // Disable Active Color
-                        //'visited'   => true,  // Enable Visited Color
-                        'default'   => array(
-                            'regular'   => '#aaa',
-                            'hover'     => '#bbb',
-                            'active'    => '#ccc',
-                        )
-                    ),
-                    array(
-                        'id'        => 'opt-header-border',
-                        'type'      => 'border',
-                        'title'     => __('Header Border Option', 'wppm'),
-                        'subtitle'  => __('Only color validation can be done on this field type', 'wppm'),
-                        'output'    => array('.site-header'), // An array of CSS selectors to apply this font style to
-                        'desc'      => __('This is the description field, again good for additional info.', 'wppm'),
-                        'default'   => array(
-                            'border-color'  => '#1e73be', 
-                            'border-style'  => 'solid', 
-                            'border-top'    => '3px', 
-                            'border-right'  => '3px', 
-                            'border-bottom' => '3px', 
-                            'border-left'   => '3px'
-                        )
-                    ),
-                    array(
-                        'id'            => 'opt-spacing',
-                        'type'          => 'spacing',
-                        'output'        => array('.site-header'), // An array of CSS selectors to apply this font style to
-                        'mode'          => 'margin',    // absolute, padding, margin, defaults to padding
-                        'all'           => true,        // Have one field that applies to all
-                        //'top'           => false,     // Disable the top
-                        //'right'         => false,     // Disable the right
-                        //'bottom'        => false,     // Disable the bottom
-                        //'left'          => false,     // Disable the left
-                        //'units'         => 'em',      // You can specify a unit value. Possible: px, em, %
-                        //'units_extended'=> 'true',    // Allow users to select any type of unit
-                        //'display_units' => 'false',   // Set to false to hide the units if the units are specified
-                        'title'         => __('Padding/Margin Option', 'wppm'),
-                        'subtitle'      => __('Allow your users to choose the spacing or margin they want.', 'wppm'),
-                        'desc'          => __('You can enable or disable any piece of this field. Top, Right, Bottom, Left, or Units.', 'wppm'),
-                        'default'       => array(
-                            'margin-top'    => '1px', 
-                            'margin-right'  => '2px', 
-                            'margin-bottom' => '3px', 
-                            'margin-left'   => '4px'
-                        )
-                    ),
-                    array(
-                        'id'                => 'opt-dimensions',
-                        'type'              => 'dimensions',
-                        'units'             => 'em',    // You can specify a unit value. Possible: px, em, %
-                        'units_extended'    => 'true',  // Allow users to select any type of unit
-                        'title'             => __('Dimensions (Width/Height) Option', 'wppm'),
-                        'subtitle'          => __('Allow your users to choose width, height, and/or unit.', 'wppm'),
-                        'desc'              => __('You can enable or disable any piece of this field. Width, Height, or Units.', 'wppm'),
-                        'default'           => array(
-                            'width'     => 200, 
-                            'height'    => 100,
-                        )
-                    ),
-                    array(
-                        'id'        => 'opt-typography-body',
-                        'type'      => 'typography',
-                        'title'     => __('Body Font', 'wppm'),
-                        'subtitle'  => __('Specify the body font properties.', 'wppm'),
-                        'google'    => true,
-                        'default'   => array(
-                            'color'         => '#dd9933',
-                            'font-size'     => '30px',
-                            'font-family'   => 'Arial,Helvetica,sans-serif',
-                            'font-weight'   => 'Normal',
-                        ),
-                    ),
-                    array(
-                        'id'        => 'opt-custom-css',
-                        'type'      => 'textarea',
-                        'title'     => __('Custom CSS', 'wppm'),
-                        'subtitle'  => __('Quickly add some CSS to your theme by adding it to this block.', 'wppm'),
-                        'desc'      => __('This field is even CSS validated!', 'wppm'),
-                        'validate'  => 'css',
-                    ),
-                    array(
-                        'id'        => 'opt-custom-html',
-                        'type'      => 'textarea',
-                        'title'     => __('Custom HTML', 'wppm'),
-                        'subtitle'  => __('Just like a text box widget.', 'wppm'),
-                        'desc'      => __('This field is even HTML validated!', 'wppm'),
-                        'validate'  => 'html',
-                    ),
-                )
-            );
 
 
 
 
 
-
-
-
-            /**
-             *  Note here I used a 'heading' in the sections array construct
-             *  This allows you to use a different title on your options page
-             * instead of reusing the 'title' value.  This can be done on any
-             * section - kp
-             */
-            $this->sections[] = array(
-                'icon'      => 'el-icon-bullhorn',
-                'title'     => __('Field Validation', 'wppm'),
-                'heading'   => __('Validate ALL fields within Redux.', 'wppm'),
-                'desc'      => __('<p class="description">This is the Description. Again HTML is allowed2</p>', 'wppm'),
-                'fields'    => array(
-                    array(
-                        'id'        => 'opt-text-email',
-                        'type'      => 'text',
-                        'title'     => __('Text Option - Email Validated', 'wppm'),
-                        'subtitle'  => __('This is a little space under the Field Title in the Options table, additional info is good in here.', 'wppm'),
-                        'desc'      => __('This is the description field, again good for additional info.', 'wppm'),
-                        'validate'  => 'email',
-                        'msg'       => 'custom error message',
-                        'default'   => 'test@test.com',
-//                        'text_hint' => array(
-//                            'title'     => 'Valid Email Required!',
-//                            'content'   => 'This field required a valid email address.'
-//                        )
-                    ),
-                    array(
-                        'id'        => 'opt-text-post-type',
-                        'type'      => 'text',
-                        'title'     => __('Text Option with Data Attributes', 'wppm'),
-                        'subtitle'  => __('You can also pass an options array if you want. Set the default to whatever you like.', 'wppm'),
-                        'desc'      => __('This is the description field, again good for additional info.', 'wppm'),
-                        'data'      => 'post_type',
-                    ),
-                    array(
-                        'id'        => 'opt-multi-text',
-                        'type'      => 'multi_text',
-                        'title'     => __('Multi Text Option - Color Validated', 'wppm'),
-                        'validate'  => 'color',
-                        'subtitle'  => __('If you enter an invalid color it will be removed. Try using the text "blue" as a color.  ;)', 'wppm'),
-                        'desc'      => __('This is the description field, again good for additional info.', 'wppm')
-                    ),
-                    array(
-                        'id'        => 'opt-text-url',
-                        'type'      => 'text',
-                        'title'     => __('Text Option - URL Validated', 'wppm'),
-                        'subtitle'  => __('This must be a URL.', 'wppm'),
-                        'desc'      => __('This is the description field, again good for additional info.', 'wppm'),
-                        'validate'  => 'url',
-                        'default'   => 'http://reduxframework.com',
-//                        'text_hint' => array(
-//                            'title'     => '',
-//                            'content'   => 'Please enter a valid <strong>URL</strong> in this field.'
-//                        )
-                    ),
-                    array(
-                        'id'        => 'opt-text-numeric',
-                        'type'      => 'text',
-                        'title'     => __('Text Option - Numeric Validated', 'wppm'),
-                        'subtitle'  => __('This must be numeric.', 'wppm'),
-                        'desc'      => __('This is the description field, again good for additional info.', 'wppm'),
-                        'validate'  => 'numeric',
-                        'default'   => '0',
-                    ),
-                    array(
-                        'id'        => 'opt-text-comma-numeric',
-                        'type'      => 'text',
-                        'title'     => __('Text Option - Comma Numeric Validated', 'wppm'),
-                        'subtitle'  => __('This must be a comma separated string of numerical values.', 'wppm'),
-                        'desc'      => __('This is the description field, again good for additional info.', 'wppm'),
-                        'validate'  => 'comma_numeric',
-                        'default'   => '0',
-                    ),
-                    array(
-                        'id'        => 'opt-text-no-special-chars',
-                        'type'      => 'text',
-                        'title'     => __('Text Option - No Special Chars Validated', 'wppm'),
-                        'subtitle'  => __('This must be a alpha numeric only.', 'wppm'),
-                        'desc'      => __('This is the description field, again good for additional info.', 'wppm'),
-                        'validate'  => 'no_special_chars',
-                        'default'   => '0'
-                    ),
-                    array(
-                        'id'        => 'opt-text-str_replace',
-                        'type'      => 'text',
-                        'title'     => __('Text Option - Str Replace Validated', 'wppm'),
-                        'subtitle'  => __('You decide.', 'wppm'),
-                        'desc'      => __('This field\'s default value was changed by a filter hook!', 'wppm'),
-                        'validate'  => 'str_replace',
-                        'str'       => array(
-                            'search'        => ' ', 
-                            'replacement'   => 'thisisaspace'
-                        ),
-                        'default'   => 'This is the default.'
-                    ),
-                    array(
-                        'id'        => 'opt-text-preg_replace',
-                        'type'      => 'text',
-                        'title'     => __('Text Option - Preg Replace Validated', 'wppm'),
-                        'subtitle'  => __('You decide.', 'wppm'),
-                        'desc'      => __('This is the description field, again good for additional info.', 'wppm'),
-                        'validate'  => 'preg_replace',
-                        'preg'      => array(
-                            'pattern'       => '/[^a-zA-Z_ -]/s', 
-                            'replacement'   => 'no numbers'
-                         ),
-                        'default'   => '0'
-                    ),
-                    array(
-                        'id'                => 'opt-text-custom_validate',
-                        'type'              => 'text',
-                        'title'             => __('Text Option - Custom Callback Validated', 'wppm'),
-                        'subtitle'          => __('You decide.', 'wppm'),
-                        'desc'              => __('This is the description field, again good for additional info.', 'wppm'),
-                        'validate_callback' => 'redux_validate_callback_function',
-                        'default'           => '0'
-                    ),
-                    array(
-                        'id'        => 'opt-textarea-no-html',
-                        'type'      => 'textarea',
-                        'title'     => __('Textarea Option - No HTML Validated', 'wppm'),
-                        'subtitle'  => __('All HTML will be stripped', 'wppm'),
-                        'desc'      => __('This is the description field, again good for additional info.', 'wppm'),
-                        'validate'  => 'no_html',
-                        'default'   => 'No HTML is allowed in here.'
-                    ),
-                    array(
-                        'id'        => 'opt-textarea-html',
-                        'type'      => 'textarea',
-                        'title'     => __('Textarea Option - HTML Validated', 'wppm'),
-                        'subtitle'  => __('HTML Allowed (wp_kses)', 'wppm'),
-                        'desc'      => __('This is the description field, again good for additional info.', 'wppm'),
-                        'validate'  => 'html', //see http://codex.wordpress.org/Function_Reference/wp_kses_post
-                        'default'   => 'HTML is allowed in here.'
-                    ),
-                    array(
-                        'id'            => 'opt-textarea-some-html',
-                        'type'          => 'textarea',
-                        'title'         => __('Textarea Option - HTML Validated Custom', 'wppm'),
-                        'subtitle'      => __('Custom HTML Allowed (wp_kses)', 'wppm'),
-                        'desc'          => __('This is the description field, again good for additional info.', 'wppm'),
-                        'validate'      => 'html_custom',
-                        'default'       => '<p>Some HTML is allowed in here.</p>',
-                        'allowed_html'  => array('') //see http://codex.wordpress.org/Function_Reference/wp_kses
-                    ),
-                    array(
-                        'id'        => 'opt-textarea-js',
-                        'type'      => 'textarea',
-                        'title'     => __('Textarea Option - JS Validated', 'wppm'),
-                        'subtitle'  => __('JS will be escaped', 'wppm'),
-                        'desc'      => __('This is the description field, again good for additional info.', 'wppm'),
-                        'validate'  => 'js'
-                    ),
-                )
-            );
             
-            $this->sections[] = array(
+            
+            /*$this->sections[] = array(
                 'icon'      => 'el-icon-check',
                 'title'     => __('Radio/Checkbox Fields', 'wppm'),
                 'desc'      => __('<p class="description">This is the Description. Again HTML is allowed</p>', 'wppm'),
@@ -1096,9 +603,9 @@ if (!class_exists('admin_folder_Redux_Framework_config')) {
                         )
                     ),
                 )
-            );
+            );*/
             
-            $this->sections[] = array(
+            /*$this->sections[] = array(
                 'icon'      => 'el-icon-list-alt',
                 'title'     => __('Select Fields', 'wppm'),
                 'desc'      => __('<p class="description">This is the Description. Again HTML is allowed</p>', 'wppm'),
@@ -1290,36 +797,12 @@ if (!class_exists('admin_folder_Redux_Framework_config')) {
                         'desc'      => __('Here\'s a list of all the elusive icons by name and icon.', 'wppm'),
                     ),
                 )
-            );
+            );*/
 
-            $theme_info  = '<div class="redux-framework-section-desc">';
-            $theme_info .= '<p class="redux-framework-theme-data description theme-uri">' . __('<strong>Theme URL:</strong> ', 'wppm') . '<a href="' . $this->theme->get('ThemeURI') . '" target="_blank">' . $this->theme->get('ThemeURI') . '</a></p>';
-            $theme_info .= '<p class="redux-framework-theme-data description theme-author">' . __('<strong>Author:</strong> ', 'wppm') . $this->theme->get('Author') . '</p>';
-            $theme_info .= '<p class="redux-framework-theme-data description theme-version">' . __('<strong>Version:</strong> ', 'wppm') . $this->theme->get('Version') . '</p>';
-            $theme_info .= '<p class="redux-framework-theme-data description theme-description">' . $this->theme->get('Description') . '</p>';
-            $tabs = $this->theme->get('Tags');
-            if (!empty($tabs)) {
-                $theme_info .= '<p class="redux-framework-theme-data description theme-tags">' . __('<strong>Tags:</strong> ', 'wppm') . implode(', ', $tabs) . '</p>';
-            }
-            $theme_info .= '</div>';
-
-            if (file_exists(dirname(__FILE__) . '/../README.md')) {
-                $this->sections['theme_docs'] = array(
-                    'icon'      => 'el-icon-list-alt',
-                    'title'     => __('Documentation', 'wppm'),
-                    'fields'    => array(
-                        array(
-                            'id'        => '17',
-                            'type'      => 'raw',
-                            'markdown'  => true,
-                            'content'   => file_get_contents(dirname(__FILE__) . '/../README.md')
-                        ),
-                    ),
-                );
-            }
+        
             
             // You can append a new section at any time.
-            $this->sections[] = array(
+            /*$this->sections[] = array(
                 'icon'      => 'el-icon-eye-open',
                 'title'     => __('Additional Fields', 'wppm'),
                 'desc'      => __('<p class="description">This is the Description. Again HTML is allowed</p>', 'wppm'),
@@ -1453,9 +936,9 @@ if (!class_exists('admin_folder_Redux_Framework_config')) {
                         'callback'  => 'redux_my_custom_field'
                     ),
                 )
-            );
+            );*/
 
-            $this->sections[] = array(
+            /*$this->sections[] = array(
                 'title'     => __('Import / Export', 'wppm'),
                 'desc'      => __('Import and Export your Redux Framework settings from file, text or URL.', 'wppm'),
                 'icon'      => 'el-icon-refresh',
@@ -1468,23 +951,24 @@ if (!class_exists('admin_folder_Redux_Framework_config')) {
                         'full_width'    => false,
                     ),
                 ),
-            );                     
+            ); */                    
                     
             $this->sections[] = array(
                 'type' => 'divide',
             );
 
+            $theme_info  = '<div class="redux-framework-section-desc">';
+            $theme_info .= '<p class="redux-framework-theme-data description theme-uri">' . __('<strong>Plugin URL:</strong> ', 'wppm') . '<a href="http://www.wp-property-manager.com" target="_blank">WP-Property-Manager.com</a></p>';
+            $theme_info .= '<p class="redux-framework-theme-data description theme-author">' . __('<strong>Author:</strong> ', 'wppm') . 'Jay Pedersen</p>';
+            $theme_info .= '<p class="redux-framework-theme-data description theme-version">' . __('<strong>Version:</strong> ', 'wppm') .'0.8</p>';
+            $theme_info .= '<p class="redux-framework-theme-data description theme-description">WP Property Manger is a Wordpress plugin that allows you to beautifully display properties for rent.</p>';
+            $theme_info .= '<p class="redux-framework-theme-data description heme-uri"><a target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PXLBAMLFKX8AN">Donate to support further development of this plugin</a></p>';
+            $theme_info .= '</div>';
+
             $this->sections[] = array(
                 'icon'      => 'el-icon-info-sign',
-                'title'     => __('Theme Information', 'wppm'),
-                'desc'      => __('<p class="description">This is the Description. Again HTML is allowed</p>', 'wppm'),
-                'fields'    => array(
-                    array(
-                        'id'        => 'opt-raw-info',
-                        'type'      => 'raw',
-                        'content'   => $item_info,
-                    )
-                ),
+                'title'     => __('Plugin Information', 'wppm'),
+                'desc'      => __($theme_info, 'wppm'),
             );
 
             if (file_exists(trailingslashit(dirname(__FILE__)) . 'README.html')) {
@@ -1532,7 +1016,7 @@ if (!class_exists('admin_folder_Redux_Framework_config')) {
                 'page_title' => 'WP Property Manager Settings',
                 'update_notice' => true,
                 'intro_text' => '<p>intro text</p>',
-                'footer_text' => '<p>This text is displayed below the options panel. It isn\\’t required, but more info is always better! The footer_text field accepts all HTML.</p>',
+                'footer_text' => '<p><a target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PXLBAMLFKX8AN">Donate to support further development of this plugin</a></p>',
                 'menu_type' => 'menu',
                 'menu_title' => 'WPPM',
                 'page_parent_post_type' => 'your_post_type',

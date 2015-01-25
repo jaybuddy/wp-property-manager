@@ -698,7 +698,6 @@
   margin: 0 auto;
   margin-top: 20px;
 }
-/* Options Page */
 /* Bootstrap Overrides */
 .panel-default > .panel-heading {
   background: #f2f2f2;
@@ -747,6 +746,12 @@
 .map-infowindow .info .rent {
   color: #108b07;
   font-weight: bold;
+}
+/* WP Specific */
+.aligncenter {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
 }
 /* Custom, iPhone Retina */
 @media only screen and (min-width: 300px) {
