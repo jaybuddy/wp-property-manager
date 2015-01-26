@@ -20,6 +20,7 @@
 
 			//Next lets get all the images in the gallery. Both Full and Thumb sizes.
 			$phototext = $rental['photo-gal'][0];
+			
 			if (empty($phototext)) {
               	echo "Were sorry, we do not have any photos for this unit yet. Check back soon!";
             } else {
