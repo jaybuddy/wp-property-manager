@@ -1,5 +1,5 @@
 #wppm {
-  background: #f8f8f8;
+  background: transparent;
   position: relative;
   /* Unit Archives CSS */
   /* Unit Single CSS */
@@ -82,7 +82,7 @@
   position: absolute;
   height: 65px;
   width: 100%;
-  background: #f8f8f8;
+  background: transparent;
   z-index: 999;
 }
 #wppm article.units-tile {
