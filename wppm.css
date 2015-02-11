@@ -82,7 +82,7 @@
   position: absolute;
   height: 65px;
   width: 100%;
-  background: transparent;
+  background: #FFFFFF;
   z-index: 999;
 }
 #wppm article.units-tile {
