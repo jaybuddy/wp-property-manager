@@ -151,9 +151,9 @@
 			if ( $redux_options['opt-enable-app-download'] == '1' ) {
 
 				if ( !empty( $rental['application'][0] ) )  {
-					return "<a target='_blank' href='".$rental['application'][0]."'><button type='button' class='btn btn-wppm apply-now'><i class='fa fa-pencil'></i><span class='hidden-xs'> Apply Now!</span></button></a>";
+					return "<a target='_blank' href='".$rental['application'][0]."'><button type='button' class='btn btn-wppm apply-now hidden-xs pull-right'><i class='fa fa-pencil'></i> Apply Now!</button><button type='button' class='btn btn-wppm apply-now hidden-sm hidden-md hidden-lg pull-right'><i class='fa fa-pencil'></i></button></a>";
 				} else {
-					return "<a target='_blank' href='".$redux_options['opt-default-application']['url']."'><button type='button' class='btn btn-wppm apply-now'><i class='fa fa-pencil'></i><span class='hidden-xs'> Apply Now!</span></button></a>";
+					return "<a target='_blank' href='".$redux_options['opt-default-application']['url']."'><button type='button' class='btn btn-wppm apply-now hidden-xs pull-right'><i class='fa fa-pencil'></i> Apply Now!</button><button type='button' class='btn btn-wppm apply-now hidden-sm hidden-md hidden-lg pull-right'><i class='fa fa-pencil'></i></button></a>";
 				}
 			} 	
 		}
@@ -164,7 +164,7 @@
 		function the_email_a_friend() {
 			global $redux_options;
 			if ( $redux_options['opt-enable-email-a-friend'] == '1' ) {
-				return "<button type='button' class='btn btn-wppm' data-toggle='modal' data-target='#shareModal'><i class='fa fa-share'></i><span class='hidden-xs'> Share</span></button>";
+				return "<button type='button' class='btn btn-wppm hidden-xs pull-right' data-toggle='modal' data-target='#shareModal'><i class='fa fa-share'></i> Share</button><button type='button' class='btn btn-wppm hidden-sm hidden-md hidden-lg pull-right' data-toggle='modal' data-target='#shareModal'><i class='fa fa-share'></i></button>";
 			}
 		}
 

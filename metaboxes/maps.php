@@ -37,8 +37,8 @@
 		</div>
 		<div id='google-street-view' class='mpanel' style='display:none'>
 			<?php if (!$flag) { ?>
-				<div id='street_view'></div>
-				<div id='street_view_fields'>
+				<div id='street-view'></div>
+				<div id='street-view-fields'>
 					<table>
 						<tr>
 							<td>Longitude<br><input type="text" name="lon" id="lon" value="<?php echo get_post_meta($post->ID, 'lon', true); ?>"  /></td>
@@ -87,8 +87,8 @@
 							  }
 							};
 
-							var map = new google.maps.Map(document.getElementById("street_view"), myOptions);
-							var panorama = new google.maps.StreetViewPanorama(document.getElementById("street_view"), panoramaOptions);
+							var map = new google.maps.Map(document.getElementById("street-view"), myOptions);
+							var panorama = new google.maps.StreetViewPanorama(document.getElementById("street-view"), panoramaOptions);
 							
 							map.setStreetView(panorama);
 

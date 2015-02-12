@@ -52,9 +52,9 @@
                               <h1><?php echo $rental['address'][0]; ?>, <?php echo $rental['city'][0]; ?> <?php echo $rental['state'][0]; ?>, <?php echo $rental['zip'][0]; ?></h1>
                          </div>
                          <div class='pull-right unit-options'>
-                              
-                              <?php echo the_email_a_friend(); ?>
                               <?php echo the_application( $rental ); ?>
+                              <?php echo the_email_a_friend(); ?>
+                              
                          </div>
                     </div>
                </div>
