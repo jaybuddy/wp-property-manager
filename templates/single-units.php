@@ -40,7 +40,7 @@
 <?php } else { ?>
 
 <div id='content'>
-     <section id='wppm'>
+     <section id='wppm' class='single'>
           <div class='wppm-head'>
                <div class='container'>
                     <div class='units-header'>

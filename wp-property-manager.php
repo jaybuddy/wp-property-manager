@@ -174,7 +174,7 @@ class wpPropertyManager {
 			wp_enqueue_style( 'bootstrap-script', dirname( __FILE__ ).'/assets/bootstrap/css/bootstrap.min.css', array(), '3.3.2' );
 		}
 
-		wp_enqueue_style( 'wppm-styes', plugin_dir_url( __FILE__ ).'wppm.css', array(), '1');
+		wp_enqueue_style( 'wppm-styes', plugin_dir_url( __FILE__ ).'assets/css/wppm.css', array(), '1');
 		wp_enqueue_style( 'fa-styes', plugin_dir_url( __FILE__ ).'assets/font-awesome/css/font-awesome.min.css', array(), '1');
 		wp_enqueue_style( 'bs-validate-css', plugin_dir_url( __FILE__ ).'assets/css/min/bootstrapValidator.min.css', array(), '.52');
 	}
