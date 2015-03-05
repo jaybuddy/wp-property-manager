@@ -16,7 +16,7 @@ This plugin DOES NOT:
 * Integrate with property management accounting software like AppFolio.
 
 ***
-
+Pretty Cool!
 
 Great! With that out of the way, Lets get started. I have made a series of short screencasts to get you up and running quickly. 
 
