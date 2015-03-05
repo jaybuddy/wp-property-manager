@@ -1,0 +1,14 @@
+// Main SCSS //
+@import "wppm/variables";
+@import "wppm/mixins";
+@import "wppm/common";
+@import "wppm/buttons";
+
+// Template SCSS //
+@import "wppm/bootstrap-override";
+@import "wppm/archive"; //Archive page//
+@import "wppm/single"; //Single Page//
+
+// Features SCSS //
+@import "wppm/slideshow";
+@import "wppm/share";

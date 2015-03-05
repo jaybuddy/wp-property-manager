@@ -1,0 +1,30 @@
+/** 
+*	Beakpoints Mixin 
+*	https://medium.com/@timknight/creating-a-dead-simple-sass-mixin-to-handle-responsive-breakpoints-889927b37740
+*/
+@mixin breakpoint($class) {
+	@if $class == xs {
+		@media (max-width: $xs-max ) { @content; }
+	}
+
+	@else if $class == sm {
+		@media (min-width: $sm-min) and (max-width: $sm-max) { @content; }
+	}
+
+	@else if $class == md {
+		@media (min-width: $md-min) and (max-width: $md-max) { @content; }
+	}
+
+	@else if $class == lg {
+		@media (min-width: $lg-min) { @content; }
+	}
+}
+
+/** 
+*	Antialiased
+*	Smoothes out fonts. looks bomb-diggity
+*/
+@mixin antialias{
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}

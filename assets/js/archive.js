@@ -4,14 +4,14 @@
 
 	$(document).ready(function(){
 
-		$('#floating-list a[href*=#]').on('click', function(event){     
+		$('.floating-list a[href*=#]').on('click', function(event){     
 			event.preventDefault();
 			$('html,body').animate({scrollTop:$(this.hash).offset().top -75}, 500);
-			$('#floating-list li').removeClass('selected');
+			$('.floating-list li').removeClass('selected');
 			$(this).parent('li').addClass('selected');
 		});
 
-		$('#floating-list').css({'height':$(window).innerHeight()-70, 'overflow':'auto'});
+		$('.floating-list').css({'height':$(window).innerHeight()-70, 'overflow':'auto'});
 		
 		/* Sticky Content on Scrolling on list page */
 		var el = $('.wppm-head').offset().top;
@@ -27,19 +27,17 @@
 			} 
 		}); 
 
-		var fl = $('#floating-list').offset().top - 65;
-		var flstop = $('.article-wrap').height() - $('#floating-list').height() + $('#floating-list').offset().top -55;
+		var fl = $('.floating-list').offset().top - 65;
+		var flstop = $('.article-wrap').height() - $('.floating-list').height() + $('.floating-list').offset().top -55;
 		$(window).scroll(function(){
 			var doc = $(document).scrollTop();
 			if (doc >= fl && doc < flstop && doc > 0) {
 				var n = doc - fl;
-				$('#floating-list').css({'top':n+'px'});
+				$('.floating-list').css({'top':n+'px'});
 			} 
-		
 			if (doc <= 10) {
-				$('#floating-list').css({'top':'0px'});
+				$('.floating-list').css({'top':'0px'});
 			}
-			
 		});
 
 		/* Button effects / Tabs */
@@ -49,7 +47,7 @@
 			$(this).addClass('selected');
 
 			$('.archive-content-section').fadeOut('fast');
-			$('#'+id+'-content').fadeIn('fast');
+			$('.'+id+'-content').fadeIn('fast');
 
 			/* Reset page position */
 			$(document).scrollTop(0);
@@ -60,9 +58,9 @@
 		});
 
 		/* Map Alterations */
-		$('#floating-map-list a').on('click', function(event){     
+		$('.floating-map-list a').on('click', function(event){     
 			event.preventDefault();
-			$('#floating-map-list li').removeClass('selected');
+			$('.floating-map-list li').removeClass('selected');
 			$(this).parent('li').addClass('selected');
 			
 			var data = JSON.parse($(this).attr('data'));
