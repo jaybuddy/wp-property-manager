@@ -292,7 +292,6 @@
 		
 	}
 
-
 	/*
 		include the template hooks
 	*/

@@ -83,30 +83,42 @@ class wpPropertyManager {
 		add_action('admin_print_styles', array( $this, 'load_admin_styles' ) );
 		add_action( 'init', array( $this, 'load_scripts') );
 		add_action( 'init', array( $this, 'load_styles' ) );
+
 		add_action( 'init', array( $this, 'init_post_type' ) );
+
 		add_filter( 'manage_edit-units_columns', array( $this, 'edit_units_columns' ) );
 		add_action( 'manage_units_posts_custom_column', array( $this, 'manage_units_columns' ) );
 		add_filter( 'manage_edit-units_sortable_columns', array( $this, 'units_sortable_columns' ) );
 		add_filter( 'request', array( $this, 'sort_units' ) );
+
 		add_action( 'wp_ajax_share_property', array( $this, 'share_property' ) );
 		add_action( 'wp_ajax_nopriv_share_property', array( $this, 'share_property' ) );
+
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		add_action( 'save_post', array( $this, 'save_unit_meta_boxes' ) );
+
 		add_filter( 'post_updated_messages', array( $this, 'updated_messages' ) );
+
 		add_filter( 'template_include', array( $this, 'load_templates' ) );
 	}
 
 	function load_admin_scripts() {
+
 		wp_enqueue_script('media-upload');
 		wp_enqueue_script('thickbox');
 		wp_enqueue_script('jquery');
 
 		wp_register_script('wppm-admin-gallery', WP_PLUGIN_URL.'/wp-property-manager/assets/js/admin-gallery.js', array('jquery','media-upload','thickbox'));
 		wp_enqueue_script('wppm-admin-gallery');
+
+
+
 	}
 
 	function load_admin_styles() {
+
 		wp_enqueue_style('thickbox');
+		wp_enqueue_style( 'wppm-admin-styles', WP_PLUGIN_URL.'/wp-property-manager/assets/css/admin.css', array(), '0.8' );
 	}
 
 	/**

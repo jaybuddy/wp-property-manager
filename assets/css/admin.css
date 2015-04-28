@@ -1,0 +1,58 @@
+#street-view {
+  width: 300px;
+  height: 300px;
+  float: left;
+  margin-right: 10px;
+  margin-left: 10px; }
+
+#google-map {
+  width: 300px;
+  height: 300px;
+  margin-right: 10px;
+  margin-left: 10px; }
+
+.tab-wrap {
+  background: #EEE;
+  padding-left: 141px; }
+
+.rcol {
+  width: 100%;
+  float: right;
+  background: #FFFFFF; }
+
+.rcol table {
+  margin: 10px; }
+
+.lcol ul {
+  padding: 0px;
+  margin: 0px;
+  width: 141px;
+  float: left;
+  background: #EEE;
+  margin-left: -141px; }
+
+.lcol ul li {
+  margin-bottom: 0px;
+  padding: 5px 0px 5px 10px;
+  border-bottom: 1px solid #DDD;
+  border-right: 1px solid #DDD; }
+
+.lcol ul li.active {
+  background: #FFFFFF;
+  border-right: 1px solid #FFF; }
+
+.lcol ul li a {
+  text-decoration: none; }
+
+.lcol ul li a i {
+  margin-right: 3px; }
+
+.gallery-table {
+  width: 100%; }
+  .gallery-table .screenshot {
+    margin-bottom: 20px; }
+    .gallery-table .screenshot .redux-option-image {
+      margin-right: 10px; }
+
+.clear {
+  clear: both; }
