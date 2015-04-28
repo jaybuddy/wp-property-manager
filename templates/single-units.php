@@ -4,7 +4,7 @@
   /* Prep the Unit Data */
   
   include(ABSPATH.'/wp-content/plugins/wp-property-manager/includes/helpers.php');
-  $rental = setupSingleUnitData( get_the_ID() );
+  $rental = setup_single_units_data( get_the_ID() );
   include(ABSPATH.'/wp-content/plugins/wp-property-manager/includes/email-to-friend.php');
 ?>
 <script type='text/javascript'>
@@ -238,14 +238,14 @@
                                                        <?php } ?>
                                                   </div>
                                                   <div class='clear'></div>
-                                                  <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#slideshowModal">
+                                                  <button type="button" class="btn btn-primary btn-xs btn-enhance" data-toggle="modal" data-target="#slideshowModal">
                                                       <i class='fa fa-camera'></i> Larger Images
                                                   </button>
                                              </div>
                                         </div>
                                    </section>
-                                   <?php echo the_google_map( $rental['ui_show_gm'][0] ); ?>
-                                   <?php echo the_google_sv( $rental['ui_show_gsv'][0] ); ?>
+                                   <?php echo the_google_map( $rental['ui_show_gm'][0], $rental ); ?>
+                                   <?php echo the_google_sv( $rental['ui_show_gsv'][0], $rental ); ?>
                                    
                                    <?php if ($rental['ui_show_gsv'][0] != 'No') { ?>
                                         

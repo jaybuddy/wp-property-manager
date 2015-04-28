@@ -14,7 +14,7 @@ get_header(); ?>
 <?php 
 	global $redux_options;
 	include(ABSPATH.'wp-content/plugins/wp-property-manager/includes/helpers.php'); 
-	$posts = setupArchiveUnitsData();
+	$posts = setup_archive_units_data();
 ?>
 
 
@@ -87,7 +87,7 @@ get_header(); ?>
 						    				</div>
 						    			</div>
 						    			<footer>
-						    				<?php echo listing_age(); ?>
+						    				<?php echo the_listing_age( $post->meta['last_avail_date'][0] ); ?>
 						    			</footer>
 						    		</article>
 					    		<?php } ?>
