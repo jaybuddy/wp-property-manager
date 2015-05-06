@@ -1,4 +1,4 @@
-<?php include(ABSPATH.'/wp-content/plugins/wp-property-manager/includes/admin-helpers.php'); ?>
+<?php include( dirname(dirname(__FILE__)) . '/helpers/admin-helpers.php' ); ?>
 
 <div class='gallery-table'>
 	
