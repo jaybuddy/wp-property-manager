@@ -449,7 +449,6 @@ class wppmCore extends wpPropertyManager {
 			 } else {
 			   $template = plugin_dir_path( __file__ ) . 'templates/single-units.php';
 			 }
-			 
         } elseif ( is_archive( 'units' ) ) {
         	if ( $overridden_template = locate_template( 'archive-units.php' ) ) {
 			   $template = $overridden_template;

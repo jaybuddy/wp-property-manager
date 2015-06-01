@@ -13,7 +13,7 @@ get_header(); ?>
 
 <?php 
 	global $redux_options;
-	include(ABSPATH.'wp-content/plugins/wp-property-manager/includes/helpers.php'); 
+	include( dirname( dirname(__file__) ).'/includes/helpers/helpers.php' ); 
 	$posts = setup_archive_units_data();
 ?>
 
@@ -47,14 +47,14 @@ get_header(); ?>
 		    	<div class='container'>
 		    		<div class='row'>
 		    			<div class='hook-archive-top'>
-			    			<?php echo hook_archive_top(); ?>
+			    			<?php //echo hook_archive_top(); ?>
 			    		</div>
 			    	</div>
 			    	<div class='row'>
 			    		<div class='col-xs-12 col-sm-8 col-md-8 col-lg-8'>
 				    		<div class='article-wrap'>
-					    		<?php foreach($posts as $post) { ?>
-					    			
+					    		<?php foreach( $posts as $post ) { ?>
+					    		
 						    		<article id='p<?php echo $post->ID; ?>' class='units-tile'>
 						    			<header>
 						    				<address>
@@ -118,7 +118,7 @@ get_header(); ?>
 				    					<?php } ?>
 				    				</ul>
 				    				<div class='hook-archive-top'>
-				    					<?php echo hook_archive_sidebar_bottom(); ?>
+				    					<?php //echo hook_archive_sidebar_bottom(); ?>
 				    				</div>
 				    			</div>
 				    		</aside>
@@ -126,7 +126,7 @@ get_header(); ?>
 				    </div>
 				    <div class='row'>
 				    	<div class='hook-archive-bottom'>
-							<?php echo hook_archive_bottom(); ?>
+							<?php //echo hook_archive_bottom(); ?>
 						</div>
 					</div>
 			    </div>
@@ -174,5 +174,5 @@ get_header(); ?>
 	</div>
 
 <!--<script type='text/javascript' src="<?php bloginfo('url'); ?>/wp-content/plugins/wp-property-manager/assets/js/min/archive-min.js"></script>-->
-<script type='text/javascript' src="<?php bloginfo('url'); ?>/wp-content/plugins/wp-property-manager/assets/js/archive.js"></script>
+<script type='text/javascript' src="<?php echo dirname( dirname(__file__) ); ?>/assets/js/archive.js"></script>
 <?php get_footer(); ?>
